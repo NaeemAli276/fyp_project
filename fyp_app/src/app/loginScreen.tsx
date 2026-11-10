@@ -2,11 +2,11 @@ import { View, Text } from 'react-native'
 import React from 'react'
 
 const loginScreen = () => {
-    return (
-        <View>
-            <Text>login</Text>
-        </View>
-    )
+  return (
+    <View>
+      <Text>LoginScreen</Text>
+    </View>
+  )
 }
 
 export default loginScreen
