@@ -9,11 +9,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        regular: ['Poppins-Regular', 'sans-serif'],
-        medium: ['Poppins-Medium', 'sans-serif'],
-        semibold: ['Poppins-SemiBold', 'sans-serif'],
-        bold: ['Poppins-Bold', 'sans-serif'],
-        black: ['Poppins-Black', 'sans-serif'],
+        "poppins-regular": ['Poppins-Regular'],
+        "poppins-medium": ['Poppins-Medium'],
+        "poppins-semibold": ['Poppins-SemiBold'],
+        "poppins-bold": ['Poppins-Bold'],
+        "poppins-black": ['Poppins-Black'],
       },
       colors: {
         background: '#eff6ff',
@@ -21,7 +21,8 @@ module.exports = {
         dark_background: '#111827',
         dark_primary: '#5b98ff',
         primary: '#3b82f6',
-        secondary: '#1e3a8a'
+        secondary: '#1e3a8a',
+        text: '#1e3a8a'
       }
     },
   },

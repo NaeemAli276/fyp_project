@@ -1,11 +1,13 @@
 import {
-  Box
+  Box,
+  ArrowLeft
 } from 'lucide-react-native';
 import type { LucideProps } from 'lucide-react-native';
 
 
 const iconMap = {
-  Box
+  Box,
+  ArrowLeft
 } as const;
 
 type IconName = keyof typeof iconMap;
