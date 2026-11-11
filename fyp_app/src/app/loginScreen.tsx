@@ -1,14 +1,27 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DynamicIcon  from '../components/ui/DynamicIcon'
 import { useNavigation } from 'expo-router'
 import { NativeStackNavigationProp } from 'expo-router' 
 import { RootStackParamList } from '@/constants/types' 
+import CustomTextInput from '@/components/ui/CustomTextInput'
 
 const loginScreen = () => {
   
   const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
+  const [form_fields, set_form_fields] = useState<Object>({
+    handle: '',
+    password: '',
+    remember_me: false
+  })
+
+  const handle_change_text_fields = (text: string, current_field: string): void => {
+    
+    
+
+  }
 
   return (
     <SafeAreaView
@@ -56,6 +69,14 @@ const loginScreen = () => {
         <View
           className='flex flex-col w-full h-auto gap-2'
         >
+          
+          {/* handle */}
+          <CustomTextInput
+            name='handle'
+            placeholder='Enter your handle...'
+            
+          />
+
           
         </View>
 
