@@ -1,6 +1,9 @@
 import { Stack } from "expo-router";
 import '../global.css'
 import { useFonts } from 'expo-font'
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+
+const queryClient = new QueryClient()
 
 export default function TabLayout() {
   
@@ -17,18 +20,20 @@ export default function TabLayout() {
   })
 
   return (
-
-    <Stack
-      screenOptions={{
-        headerShown: false
-      }}
+    <QueryClientProvider
+      client={queryClient}
     >
-      <Stack.Screen name="index"/>
-      <Stack.Screen name="loginScreen"/>
-      <Stack.Screen name="registerScreen"/>
-      <Stack.Screen name="splashScreen"/>
-      <Stack.Screen name="settingsScreen"/>
-    </Stack>
-
+      <Stack
+        screenOptions={{
+          headerShown: false
+        }}
+      >
+        <Stack.Screen name="index"/>
+        <Stack.Screen name="loginScreen"/>
+        <Stack.Screen name="registerScreen"/>
+        <Stack.Screen name="splashScreen"/>
+        <Stack.Screen name="settingsScreen"/>
+      </Stack>
+    </QueryClientProvider>
   );
 }

@@ -16,12 +16,9 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
     user: null,
-    isAuthenticated: false,
+    isAuthenticated: true,
     login: async (username, password) => {
-        await new Promise((resolve) => setTimeout(resolve, 500))
-        set({
-            user: { id: '1', display_name: username, avatar_url: null }
-        })
+        
     },
     logout: () => set({ user: null, isAuthenticated: false })
 }))

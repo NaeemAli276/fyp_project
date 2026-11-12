@@ -3,7 +3,9 @@ import {
   ArrowLeft,
   Eye,
   EyeOff,
-  Check
+  Check,
+  Settings,
+  Search
 } from 'lucide-react-native';
 import type { LucideProps } from 'lucide-react-native';
 
@@ -13,7 +15,9 @@ const iconMap = {
   ArrowLeft,
   Eye,
   EyeOff,
-  Check
+  Check,
+  Settings,
+  Search
 } as const;
 
 type IconName = keyof typeof iconMap;

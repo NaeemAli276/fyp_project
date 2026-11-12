@@ -12,7 +12,7 @@ const LongBtn: React.FC<LongBtnProps> = ({
 }) => {
     return (
         <TouchableOpacity
-            className='w-full h-auto p-3 rounded-lg bg-primary dark:bg-primary'
+            className='w-full h-auto p-3 rounded-lg bg-primary dark:bg-dark_primary'
             onPress={onPress}
         >
             <Text
