@@ -5,19 +5,17 @@ import React, { useState } from 'react'
 interface CustomTextInputProps {
     name: string
     placeholder: string
-    children: any | null
     error_message: string
     type: string
     value: string
-    onChangeText: () => void
+    onChangeText: (text: string) => void
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
     name = 'handle',
     placeholder = 'Enter your handle...',
-    children,
-    error_message = 'Enter a valid handle',
-    type = 'password',
+    error_message = '',
+    type = 'text',
     value = '',
     onChangeText
 }) => {
@@ -39,18 +37,19 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
                 <TextInput
                     
                     className={`
-                        border-2 rounded-lg font-poppins-regular pl-3 pt-6 pb-2 text-text dark:text-background  border-primary dark:border-dark_primary
+                        border rounded-lg font-poppins-regular pl-3 pt-7 pb-2 text-text dark:text-background  border-primary dark:border-dark_primary placeholder:text-text/80 dark:placeholder:text-background/80
                     `}
                     placeholder={placeholder}
                     value={value}
                     onChangeText={onChangeText}
                     secureTextEntry={type === 'password' ? true : false}
                 />    
-                <View>
-                    {children}
-                </View>
             </View>
-            <Text>CustomTextInput</Text>
+            <Text
+                className='pl-1 text-sm text-rose-400'
+            >
+                {error_message}
+            </Text>
         </View>
     )
 }

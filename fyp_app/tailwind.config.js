@@ -9,6 +9,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        "poppins-light": ['Poppins-Light'],
         "poppins-regular": ['Poppins-Regular'],
         "poppins-medium": ['Poppins-Medium'],
         "poppins-semibold": ['Poppins-SemiBold'],
