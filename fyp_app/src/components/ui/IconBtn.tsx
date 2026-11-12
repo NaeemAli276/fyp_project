@@ -27,7 +27,7 @@ const IconBtn: React.FC<IconBtnProps> = ({
                 name={name}
                 size={size}
                 strokeWidth={strokeWidth}
-                color={colorScheme === 'dark' ? '#eff6ff' : '#1e3a8a'}
+                color={'#eff6ff'}
             />
         </TouchableOpacity>
     )

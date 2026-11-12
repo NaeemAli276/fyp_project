@@ -9,8 +9,6 @@ interface CustomTextInputProps {
     type: string
     value: string
     onChangeText: (text: string) => void,
-    icon_name: any
-    icon_colour: string
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
@@ -20,8 +18,6 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
     type = 'text',
     value = '',
     onChangeText,
-    icon_name,
-    icon_colour
 }) => {
 
 
@@ -35,24 +31,14 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
                 className='relative w-full h-auto'
             >
                 <Text
-                    className={`absolute top-2 left-3.5 font-poppins-regular text-sm text-text/80 dark:text-background/80 ${icon_name !== '' || name === '' ? 'hidden' : 'flex'}`}
+                    className={`absolute top-2 left-3.5 font-poppins-regular text-sm text-text/80 dark:text-background/80`}
                 >
                     {name}    
                 </Text>
-                <View
-                    className='absolute top-2 left-2'
-                >
-                    <DynamicIcon
-                        name={icon_name}
-                        size={20}
-                        strokeWidth={1.2}
-                        color={icon_colour}
-                    />
-                </View>
+
                 <TextInput
                     className={`
-                        border rounded-lg font-poppins-regular pb-2 text-text dark:text-background  border-primary dark:border-dark_primary placeholder:text-text/80 dark:placeholder:text-background/80
-                        ${icon_name !== '' ? 'pl-8 p-2' : 'pl-3 pt-7'}
+                        border rounded-lg font-poppins-regular pb-2 pl-3 pt-7 text-text dark:text-background  border-primary dark:border-dark_primary placeholder:text-text/80 dark:placeholder:text-background/80
                     `}
                     placeholder={placeholder}
                     value={value}

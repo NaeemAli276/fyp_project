@@ -5,7 +5,8 @@ import {
   EyeOff,
   Check,
   Settings,
-  Search
+  Search,
+  X
 } from 'lucide-react-native';
 import type { LucideProps } from 'lucide-react-native';
 
@@ -17,7 +18,8 @@ const iconMap = {
   EyeOff,
   Check,
   Settings,
-  Search
+  Search,
+  X
 } as const;
 
 type IconName = keyof typeof iconMap;
