@@ -1,11 +1,7 @@
 // authstore.ts
 import { create } from 'zustand'
+import { User } from '../constants/types'
 
-interface User {
-    id: string
-    display_name: string
-    avatar_url: string | null
-}
 
 interface AuthState {
     user: User | null

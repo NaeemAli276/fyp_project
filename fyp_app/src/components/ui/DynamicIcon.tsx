@@ -6,7 +6,10 @@ import {
   Check,
   Settings,
   Search,
-  X
+  X,
+  Loader,
+  MessageSquare,
+  UserRoundPlus
 } from 'lucide-react-native';
 import type { LucideProps } from 'lucide-react-native';
 
@@ -19,7 +22,10 @@ const iconMap = {
   Check,
   Settings,
   Search,
-  X
+  X,
+  Loader,
+  MessageSquare,
+  UserRoundPlus
 } as const;
 
 type IconName = keyof typeof iconMap;

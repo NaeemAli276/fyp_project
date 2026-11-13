@@ -4,3 +4,8 @@ export type RootStackParamList = {
     registerScreen: undefined,
     splashScreen: undefined
 };
+
+export interface User {
+    id: string
+    display_name: string
+}
