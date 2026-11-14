@@ -6,14 +6,16 @@ interface IconBtnProps {
     name: any
     onPress: () => void
     size: number
-    strokeWidth: number
+    strokeWidth: number,
+    colour?: string
 }
 
 const IconBtn: React.FC<IconBtnProps> = ({
     name, 
     onPress,
     size,
-    strokeWidth
+    strokeWidth,
+    colour = '#eff6ff',
 }) => {
     
     const colorScheme = useColorScheme()
@@ -27,7 +29,7 @@ const IconBtn: React.FC<IconBtnProps> = ({
                 name={name}
                 size={size}
                 strokeWidth={strokeWidth}
-                color={'#eff6ff'}
+                color={colour}
             />
         </TouchableOpacity>
     )

@@ -45,7 +45,7 @@ const loginScreen = () => {
 
   return (
     <SafeAreaView
-      className='w-full h-screen bg-primary dark:bg-dark_primary rounded-[2rem]'
+      className='w-full h-screen bg-primary dark:bg-dark_primary'
     >
 
       {/* go back btn */}

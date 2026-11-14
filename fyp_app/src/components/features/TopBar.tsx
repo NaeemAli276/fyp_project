@@ -16,9 +16,9 @@ const TopBar: React.FC<TopBarProps> = ({
 }) => {
     return (
         <View
-            className='bg-primary dark:bg-dark_primary rounded-[2rem] flex flex-col gap-8 h-auto py-8'
+            className='bg-primary dark:bg-dark_primary rounded-b-[2rem] flex flex-col gap-8 h-auto py-8'
         >              
-            {/* title and menu btn */}
+            {/* title and settings btn */}
             <View
                 className='flex flex-row items-center justify-between w-full h-auto pt-6 pl-8 pr-7'
             >
@@ -28,12 +28,24 @@ const TopBar: React.FC<TopBarProps> = ({
                     Contacts
                 </Text>
 
-                <IconBtn
-                    name={'Settings'}
-                    onPress={() => {}}
-                    size={24}
-                    strokeWidth={1.2}
-                />
+                {/* search user btn and settings btn */}
+                <View
+                    className='flex flex-row items-center w-auto h-auto gap-2'
+                >
+                    <IconBtn
+                        name={'UserPlus'}
+                        onPress={() => {}}
+                        size={24}
+                        strokeWidth={1.2}
+                    />
+
+                    <IconBtn
+                        name={'Settings'}
+                        onPress={() => {}}
+                        size={24}
+                        strokeWidth={1.2}
+                    />
+                </View>
             </View>
 
             {/* search bar */}

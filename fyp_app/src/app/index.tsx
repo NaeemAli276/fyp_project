@@ -1,18 +1,15 @@
-import { View, Text, useColorScheme, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { FlatList, View, Text, useColorScheme, ActivityIndicator, TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { Redirect } from 'expo-router'
 import { useAuthStore } from '@/stores/authStore'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useQuery } from '@tanstack/react-query' 
-import { User } from '@/constants/types'
+import { Contact } from '@/constants/types'
 import ActionSheet, { ActionSheetRef } from "react-native-actions-sheet";
 import TopBar from '@/components/features/TopBar'
 import DynamicIcon from '@/components/ui/DynamicIcon'
 import VerboseBtn from '@/components/ui/VerboseBtn'
-
-interface Contacts extends User {
-  recent_message: string
-}
+import ContactCard from '@/components/features/ContactCard'
 
 const ContactListScreen = () => {
   
@@ -24,29 +21,32 @@ const ContactListScreen = () => {
 
   const [search_query, set_search_query] = useState<string>('')
 
-  const [contacts, set_contacts] = useState<Contacts[]>([
+  const [contacts, set_contacts] = useState<Contact[]>([
     {
       id: '1',
       display_name: 'John Doe',
-      recent_message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis eius similique nulla'
+      recent_message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis eius similique nulla',
+      time: '14:45'
     },
     {
       id: '2',
       display_name: 'Jane Doe',
-      recent_message: 'earum voluptatum officiis commodi. Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.'
+      recent_message: 'earum voluptatum officiis commodi. Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.',
+      time: '16:23'
     },
     {
       id: '3',
       display_name: 'Bob Joe',
-      recent_message: 'Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.'
+      recent_message: 'Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.',
+      time: '18:31'
     },
 
   ])
 
   const { isLoading, error, data } = useQuery({
     queryKey: ['load_messages'],
-    queryFn: () => { return [] },
-    initialData: []
+    queryFn: () => { return contacts },
+    initialData: contacts
   })
 
   const openNewContactDrawer = (): void => {
@@ -61,7 +61,7 @@ const ContactListScreen = () => {
   else {
     return (
       <View
-        className='relative w-full h-screen bg-background dark:bg-dark_background rounded-[2rem]'
+        className='relative w-full h-screen bg-background dark:bg-dark_background'
       > 
 
         <TopBar
@@ -156,7 +156,7 @@ const ContactListScreen = () => {
                 >
                   <DynamicIcon
                     name={'Dot'}
-                    color={'#eff6ff'}
+                    color={colorScheme === 'dark' ? '#5b98ff' : '#eff6ff'}
                     size={64}
                   />
                 </View>
@@ -170,7 +170,7 @@ const ContactListScreen = () => {
                 >
                   <DynamicIcon
                     name={'Dot'}
-                    color={'#eff6ff'}
+                    color={colorScheme === 'dark' ? '#5b98ff' : '#eff6ff'}
                     size={64}
                   />
                 </View>
@@ -202,7 +202,26 @@ const ContactListScreen = () => {
               </Text>
             </View>
           </View>
-          
+
+          {/* normal state */}
+          <View
+            className={`${!isLoading && error === null && data.length > 0 ? 'flex' : 'hidden'} flex-col w-full h-full`}
+          >
+            <FlatList
+              data={contacts}
+              renderItem={({ item }) => (
+                <ContactCard
+                  recent_message={item.recent_message}
+                  display_name={item.display_name}
+                  id={item.id}
+                  time={item.time}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+              className='flex flex-col gap-2'
+            />
+          </View>
+
         </View>
 
         {/* menu for showing your detail btn or scan/input code btn */}
