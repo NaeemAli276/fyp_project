@@ -2,8 +2,19 @@ import { Stack } from "expo-router";
 import '../global.css'
 import { useFonts } from 'expo-font'
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { DevToolsBubble } from 'react-native-react-query-devtools';
+import * as Clipboard from 'expo-clipboard'; // For Expo
 
 const queryClient = new QueryClient()
+
+const onCopy = async (text: string) => {
+  try {
+    await Clipboard.setStringAsync(text);
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 export default function TabLayout() {
   
@@ -18,6 +29,7 @@ export default function TabLayout() {
     'Poppins-Bold': require('../../assets/fonts/Poppins/Poppins-Bold.ttf'),
     'Poppins-Black': require('../../assets/fonts/Poppins/Poppins-Black.ttf'),
   })
+  
 
   return (
     <QueryClientProvider
@@ -34,6 +46,7 @@ export default function TabLayout() {
         <Stack.Screen name="splashScreen"/>
         <Stack.Screen name="settingsScreen"/>
       </Stack>
+      <DevToolsBubble onCopy={onCopy} queryClient={queryClient} />
     </QueryClientProvider>
   );
 }

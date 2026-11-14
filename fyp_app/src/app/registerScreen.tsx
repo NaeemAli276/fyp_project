@@ -43,7 +43,7 @@ const registerScreen = () => {
   
   return (
     <SafeAreaView
-      className='w-full h-screen bg-primary dark:bg-dark_primary'
+      className='w-full h-screen bg-primary dark:bg-dark_primary rounded-[2rem]'
     >
 
       {/* go back btn */}

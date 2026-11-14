@@ -9,7 +9,14 @@ import {
   X,
   Loader,
   MessageSquare,
-  UserRoundPlus
+  UserRoundPlus,
+  ScanQrCode,
+  Forward,
+  UsersRoundCollaboration,
+  MessageSquarePlus,
+  Triangle,
+  Server,
+  Dot,
 } from 'lucide-react-native';
 import type { LucideProps } from 'lucide-react-native';
 
@@ -25,7 +32,14 @@ const iconMap = {
   X,
   Loader,
   MessageSquare,
-  UserRoundPlus
+  UserRoundPlus,
+  ScanQrCode,
+  Forward,
+  UsersRoundCollaboration,
+  MessageSquarePlus,
+  Triangle,
+  Server,
+  Dot,
 } as const;
 
 type IconName = keyof typeof iconMap;

@@ -13,7 +13,7 @@ const splashScreen = () => {
 
   return (
     <SafeAreaView
-      className='relative flex items-center justify-center w-full h-screen p-8 py-6 bg-background dark:bg-dark_background'
+      className='relative flex items-center justify-center w-full h-screen p-8 py-6 bg-background dark:bg-dark_background rounded-[2rem]'
     >
       
       <View

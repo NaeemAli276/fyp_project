@@ -8,6 +8,7 @@ import { User } from '@/constants/types'
 import ActionSheet, { ActionSheetRef } from "react-native-actions-sheet";
 import TopBar from '@/components/features/TopBar'
 import DynamicIcon from '@/components/ui/DynamicIcon'
+import VerboseBtn from '@/components/ui/VerboseBtn'
 
 interface Contacts extends User {
   recent_message: string
@@ -60,7 +61,7 @@ const ContactListScreen = () => {
   else {
     return (
       <View
-        className='relative w-full h-screen bg-background dark:bg-dark_background'
+        className='relative w-full h-screen bg-background dark:bg-dark_background rounded-[2rem]'
       > 
 
         <TopBar
@@ -120,7 +121,7 @@ const ContactListScreen = () => {
               <Text
                 className='text-xl font-poppins-semibold text-text dark:text-background'
               >
-                No messages
+                No contacts
               </Text>
               <Text
                 className='text-center text-text/80 dark:text-background/80 font-poppins-regular'
@@ -131,23 +132,81 @@ const ContactListScreen = () => {
 
           </View>
 
-          {/*  */}
-
+          {/* error state */}
+          <View
+            className={`w-full h-full ${!isLoading && error !== null ? 'flex' : 'hidden'} flex-col items-center justify-center gap-4`}
+          >
+            <View
+              className='relative w-auto h-auto'
+            >
+              <DynamicIcon
+                name={'Server'}
+                size={80}
+                strokeWidth={1.2}
+                fill={colorScheme === 'dark' ? '#eff6ff' : '#1e3a8a'}
+                color={colorScheme === 'dark' ? '#eff6ff' : '#1e3a8a'}
+              >
+                <View
+                  style={{
+                    transform: [
+                      { translateX: 4 * -3.5 },
+                      { translateY: 4 * 7 }
+                    ]
+                  }}
+                >
+                  <DynamicIcon
+                    name={'Dot'}
+                    color={'#eff6ff'}
+                    size={64}
+                  />
+                </View>
+                <View
+                  style={{
+                    transform: [
+                      { translateX: 4 * -3.5 },
+                      { translateY: 4 * -19 }
+                    ]
+                  }}
+                >
+                  <DynamicIcon
+                    name={'Dot'}
+                    color={'#eff6ff'}
+                    size={64}
+                  />
+                </View>
+              </DynamicIcon>
+              <View
+                className='absolute p-1 rounded-full -right-0 top-14 bg-primary dark:bg-dark_primary'
+              >
+                <DynamicIcon
+                  name='X'
+                  color={'#eff6ff'}
+                  strokeWidth={1.2}  
+                  size={24}
+                />
+              </View>
+            </View>
+            {/* detail */}
+            <View
+              className='flex flex-col items-center justify-center w-auto h-auto gap-0 pb-12'
+            >
+              <Text
+                className='text-xl font-poppins-semibold text-text dark:text-background'
+              >
+                Error
+              </Text>
+              <Text
+                className='text-center px-14 text-text/80 dark:text-background/80 font-poppins-regular'
+              >
+                An error has occured, please reload the app
+              </Text>
+            </View>
+          </View>
           
         </View>
 
-        <TouchableOpacity
-          className='absolute p-2 rounded-md bottom-12 right-8 bg-primary dark:bg-dark_primary'
-          onPress={() => openNewContactDrawer()}
-        >
-          <DynamicIcon
-            name='UserRoundPlus'
-            size={36}
-            strokeWidth={1.5}
-            color={'#eff6ff'}
-          />
-        </TouchableOpacity>
-        <ActionSheet
+        {/* menu for showing your detail btn or scan/input code btn */}
+        {/* <ActionSheet
           ref={action_sheet_ref}
           containerStyle={{ 
             height: 4 * 56,
@@ -155,11 +214,20 @@ const ContactListScreen = () => {
           }}
         >
           <View
-            className='w-full h-56'
+            className='flex flex-col w-full h-auto gap-8 p-6'
           >
-            
+            <VerboseBtn
+              icon_name={'UsersRoundCollaboration'}
+              btn_purpose='Share contact details'
+              onPress={() => {}}
+            />
+            <VerboseBtn
+              icon_name={'ScanQrCode'}
+              btn_purpose='Scan QR code or input code'
+              onPress={() => {}}
+            />
           </View>
-        </ActionSheet>
+        </ActionSheet> */}
       </View>
     )
   }

@@ -16,7 +16,7 @@ const TopBar: React.FC<TopBarProps> = ({
 }) => {
     return (
         <View
-            className='bg-primary dark:bg-dark_primary rounded-b-[2rem] flex flex-col gap-8 h-auto py-8'
+            className='bg-primary dark:bg-dark_primary rounded-[2rem] flex flex-col gap-8 h-auto py-8'
         >              
             {/* title and menu btn */}
             <View
