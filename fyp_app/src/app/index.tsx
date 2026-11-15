@@ -26,19 +26,22 @@ const ContactListScreen = () => {
       id: '1',
       display_name: 'John Doe',
       recent_message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis eius similique nulla',
-      time: '14:45'
+      time: '14:45',
+      avatar_url: 'https://picsum.photos/seed/b/200/200'
     },
     {
       id: '2',
       display_name: 'Jane Smith',
       recent_message: 'earum voluptatum officiis commodi. Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.',
-      time: '16:23'
+      time: '16:23',
+      avatar_url: 'https://picsum.photos/seed/a/200/200'
     },
     {
       id: '3',
       display_name: 'Bob Jones',
       recent_message: 'Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.',
-      time: '18:31'
+      time: '18:31',
+      avatar_url: null
     },
 
   ])
@@ -215,6 +218,7 @@ const ContactListScreen = () => {
                   display_name={item.display_name}
                   id={item.id}
                   time={item.time}
+                  avatar_url={item.avatar_url}
                 />
               )}
               keyExtractor={(item) => item.id}

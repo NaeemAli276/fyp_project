@@ -16,7 +16,9 @@ import {
   Triangle,
   Server,
   Dot,
-  UserPlus
+  UserPlus,
+  LogOut,
+  User
 } from 'lucide-react-native';
 import type { LucideProps } from 'lucide-react-native';
 
@@ -39,7 +41,9 @@ const iconMap = {
   Triangle,
   Server,
   Dot,
-  UserPlus
+  UserPlus,
+  LogOut,
+  User
 } as const;
 
 type IconName = keyof typeof iconMap;

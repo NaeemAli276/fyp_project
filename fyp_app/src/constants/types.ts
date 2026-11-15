@@ -9,6 +9,7 @@ export type RootStackParamList = {
 export interface User {
     id: string
     display_name: string
+    avatar_url: string | null
 }
 
 export interface Contact extends User {

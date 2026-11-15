@@ -19,7 +19,7 @@ const searchPage = () => {
         >
             
             <View
-                className='flex flex-col w-full h-auto gap-10 p-8 pt-12 rounded-md bg-primary dark:bg-dark_primary rounded-[2rem]'
+                className='flex flex-col w-full h-auto gap-10 p-8 pt-12 bg-primary dark:bg-dark_primary rounded-[2rem]'
             >
                 {/* back btn */}
                 <IconBtn
