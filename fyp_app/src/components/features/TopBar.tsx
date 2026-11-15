@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import IconBtn from '../ui/IconBtn'
 import SearchBar from '../ui/SearchBar'
+import { useRouter } from 'expo-router'
 
 interface TopBarProps {
     handleChangeText: (text: string) => void
@@ -14,6 +15,9 @@ const TopBar: React.FC<TopBarProps> = ({
     search_query,
     clearText
 }) => {
+
+    const router = useRouter()
+
     return (
         <View
             className='bg-primary dark:bg-dark_primary rounded-b-[2rem] flex flex-col gap-8 h-auto py-8'
@@ -34,14 +38,14 @@ const TopBar: React.FC<TopBarProps> = ({
                 >
                     <IconBtn
                         name={'UserPlus'}
-                        onPress={() => {}}
+                        onPress={() => router.push('/searchPage')}
                         size={24}
                         strokeWidth={1.2}
                     />
 
                     <IconBtn
                         name={'Settings'}
-                        onPress={() => {}}
+                        onPress={() => router.push('/settingsScreen')}
                         size={24}
                         strokeWidth={1.2}
                     />
@@ -56,6 +60,7 @@ const TopBar: React.FC<TopBarProps> = ({
                     onChangeText={handleChangeText}
                     value={search_query}
                     clearText={clearText}
+                    placeholder='Search your contacts...'
                 />
             </View>
 

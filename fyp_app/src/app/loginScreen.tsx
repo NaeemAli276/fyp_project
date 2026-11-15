@@ -2,9 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DynamicIcon  from '../components/ui/DynamicIcon'
-import { useNavigation } from 'expo-router'
-import { NativeStackNavigationProp } from 'expo-router' 
-import { RootStackParamList } from '@/constants/types' 
+import { Link, useRouter } from 'expo-router'
 import CustomTextInput from '@/components/ui/CustomTextInput'
 import { useColorScheme } from 'react-native' 
 import CustomCheckbox from '@/components/ui/CustomCheckbox'
@@ -18,9 +16,9 @@ interface form_fields {
 
 const loginScreen = () => {
   
-  const colorScheme = useColorScheme()
+  const router = useRouter()
 
-  const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+  const colorScheme = useColorScheme()
 
   const [show_password, set_show_password] = useState<boolean>(false)
 
@@ -52,8 +50,8 @@ const loginScreen = () => {
       <View
         className='w-auto h-auto p-8 pt-4 pb-24'
       >
-        <TouchableOpacity
-          onPress={() => nav.goBack()}
+        <Link
+          href={'/splashScreen'}
         >
           <DynamicIcon
             name='ArrowLeft'
@@ -61,7 +59,7 @@ const loginScreen = () => {
             strokeWidth={1.2}
             color={'#ffffff'}
           />
-        </TouchableOpacity>
+        </Link>
       </View>
 
       {/* main content */}
@@ -144,15 +142,15 @@ const loginScreen = () => {
           />
 
           {/* register redirect btn */}
-          <TouchableOpacity
-            onPress={() => nav.navigate('registerScreen')}
+          <Link
+            href={'/registerScreen'}
           >
             <Text
               className='text-center text-text/80 dark:text-background/80 font-poppins-regular'
             >
               Don't have an account? <Text className='text-primary dark:text-dark_primary'>Sign up</Text>
             </Text>
-          </TouchableOpacity>
+          </Link>
 
         </View>
 

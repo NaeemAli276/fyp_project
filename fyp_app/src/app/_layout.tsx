@@ -45,6 +45,8 @@ export default function TabLayout() {
         <Stack.Screen name="registerScreen"/>
         <Stack.Screen name="splashScreen"/>
         <Stack.Screen name="settingsScreen"/>
+        <Stack.Screen name="[id]"/>
+        <Stack.Screen name="searchPage"/>
       </Stack>
       <DevToolsBubble onCopy={onCopy} queryClient={queryClient} />
     </QueryClientProvider>

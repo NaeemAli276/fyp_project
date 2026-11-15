@@ -2,7 +2,8 @@ export type RootStackParamList = {
     index: undefined
     loginScreen: undefined; 
     registerScreen: undefined,
-    splashScreen: undefined
+    splashScreen: undefined,
+    contactScreen: { id: string }
 };
 
 export interface User {

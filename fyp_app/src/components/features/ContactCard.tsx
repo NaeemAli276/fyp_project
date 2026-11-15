@@ -1,7 +1,8 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { Contact } from '@/constants/types'
+import { Contact, RootStackParamList } from '@/constants/types'
 import { truncateText } from '@/utils/stringUtils'
+import { useRouter } from 'expo-router'
 
 const ContactCard: React.FC<Contact> = ({
     id,
@@ -9,9 +10,16 @@ const ContactCard: React.FC<Contact> = ({
     recent_message,
     time
 }) => {
+
+    const router = useRouter()
+
     return (
         <TouchableOpacity
             className='flex flex-row w-full h-[72px] p-3 px-8'
+            onPress={() => router.push({
+                pathname: '/[id]',
+                params: { id: id }
+            })}
         >
             
             {/* name and message truncated */}

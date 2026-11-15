@@ -30,13 +30,13 @@ const ContactListScreen = () => {
     },
     {
       id: '2',
-      display_name: 'Jane Doe',
+      display_name: 'Jane Smith',
       recent_message: 'earum voluptatum officiis commodi. Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.',
       time: '16:23'
     },
     {
       id: '3',
-      display_name: 'Bob Joe',
+      display_name: 'Bob Jones',
       recent_message: 'Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.',
       time: '18:31'
     },
@@ -205,7 +205,7 @@ const ContactListScreen = () => {
 
           {/* normal state */}
           <View
-            className={`${!isLoading && error === null && data.length > 0 ? 'flex' : 'hidden'} flex-col w-full h-full`}
+            className={`${!isLoading && error === null && data.length > 0 ? 'flex' : 'hidden'} flex-col w-full h-full pt-5`}
           >
             <FlatList
               data={contacts}

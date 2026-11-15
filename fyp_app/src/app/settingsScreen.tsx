@@ -3,7 +3,9 @@ import React from 'react'
 
 const settingsScreen = () => {
   return (
-    <View>
+    <View
+      className='p-8'
+    >
       <Text>SettingsScreen</Text>
     </View>
   )
