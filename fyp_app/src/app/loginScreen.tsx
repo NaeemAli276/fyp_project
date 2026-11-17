@@ -9,7 +9,7 @@ import CustomCheckbox from '@/components/ui/CustomCheckbox'
 import LongBtn from '@/components/ui/LongBtn'
 
 interface form_fields {
-  handle: string
+  email: string
   password: string
   remember_me: boolean
 }
@@ -23,7 +23,7 @@ const loginScreen = () => {
   const [show_password, set_show_password] = useState<boolean>(false)
 
   const [form_fields, set_form_fields] = useState<form_fields>({
-    handle: '',
+    email: '',
     password: '',
     remember_me: false
   })
@@ -90,12 +90,12 @@ const loginScreen = () => {
           
           {/* handle */}
           <CustomTextInput
-            name='Handle'
-            placeholder='Enter your handle...'
+            name='Email'
+            placeholder='Enter your email...'
             error_message=''
             type='text'
-            value={form_fields.handle}
-            onChangeText={(text: string) => handle_change_text_fields(text, 'handle')}
+            value={form_fields.email}
+            onChangeText={(text: string) => handle_change_text_fields(text, 'email')}
           />
 
           {/* password */}

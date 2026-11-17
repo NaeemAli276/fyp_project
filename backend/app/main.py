@@ -1,7 +1,7 @@
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import devices, notifications, moderation
+from app.routers import devices, notifications, moderation, users
 
 logging.basicConfig(level=logging.INFO)
 
@@ -18,6 +18,7 @@ app.add_middleware(
 app.include_router(devices.router, prefix="/api/v1")
 app.include_router(notifications.router, prefix="/api/v1")
 app.include_router(moderation.router, prefix="/api/v1")
+app.include_router(moderation.router, prefix='/api/v1')
 
 @app.get("/health")
 async def health():

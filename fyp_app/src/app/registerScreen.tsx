@@ -10,7 +10,8 @@ import { useColorScheme } from 'react-native'
 import CustomCheckbox from '@/components/ui/CustomCheckbox'
 import LongBtn from '@/components/ui/LongBtn'
 
-interface form_fields {
+type form_fields = {
+  email: string
   handle: string
   password: string,
   confirm_password: string
@@ -26,6 +27,7 @@ const registerScreen = () => {
   const [show_password, set_show_password] = useState<boolean>(false)
 
   const [form_fields, set_form_fields] = useState<form_fields>({
+    email: '',
     handle: '',
     password: '',
     confirm_password: '',
@@ -48,7 +50,7 @@ const registerScreen = () => {
 
       {/* go back btn */}
       <View
-        className='w-auto h-auto p-8 pt-4 pb-24'
+        className='w-auto h-auto p-8 pt-4 pb-10'
       >
         <Link
           href={'/splashScreen'}
@@ -87,7 +89,17 @@ const registerScreen = () => {
         <View
           className='flex flex-col w-full h-auto gap-2'
         >
-          
+        
+          {/* handle */}
+          <CustomTextInput
+            name='Email'
+            placeholder='Enter your email...'
+            error_message=''
+            type='text'
+            value={form_fields.handle}
+            onChangeText={(text: string) => handle_change_text_fields(text, 'email')}
+          />
+
           {/* handle */}
           <CustomTextInput
             name='Handle'
@@ -159,7 +171,7 @@ const registerScreen = () => {
 
         {/* login btn and redirect btn */}
         <View
-          className='flex flex-col justify-between w-full h-[18%]'
+          className='flex flex-col justify-between w-full h-[12%]'
         >
           <LongBtn
             name='Register'
