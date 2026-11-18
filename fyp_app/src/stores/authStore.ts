@@ -1,20 +1,109 @@
 // authstore.ts
 import { create } from 'zustand'
 import { User } from '../constants/types'
+import { supabase } from '@/lib/supbase'
+import { mapSupabaseUser } from '@/lib/mapSupabaseUser'
 
 
 interface AuthState {
     user: User | null
     isAuthenticated: boolean
-    login: (username: string, password: string) => Promise<void>
-    logout: () => void
+    isLoading: boolean
+    login: (email: string, password: string) => Promise<void>
+    logout: () => Promise<void>
+    initialise: () => void
 }
+
+// Add an async function to fetch the profile
+const fetchProfile = async (userId: string) => {
+    const { data, error } = await supabase
+        .from('profiles')
+        .select('*')  // Or explicitly list the fields you want: 'display_name, avatar_url, ...'
+        .eq('id', userId)
+        .single();
+
+    if (error) {
+        console.warn('Failed to fetch profile:', error.message);
+        return null;
+    }
+    return data;
+};
 
 export const useAuthStore = create<AuthState>((set) => ({
     user: null,
     isAuthenticated: false,
-    login: async (username, password) => {
+    isLoading: true,
+
+    login: async (email, password) => {
+                
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+        })        
         
+        if (error) console.log(error.message)
+
+        const profile = await fetchProfile(data.user.id)
+
+        set({
+            user: mapSupabaseUser(data.user, profile),
+            isAuthenticated: true,
+            isLoading: false
+        })
+
     },
-    logout: () => set({ user: null, isAuthenticated: false })
+
+    logout: async () => {
+        await supabase.auth.signOut()
+        set({
+            user: null,
+            isAuthenticated: false,
+            isLoading: false
+        })
+    },
+
+    initialise: async () => {
+
+        supabase.auth.getSession().then( async ({ data: { session } }) => {
+
+            if (session?.user) {
+
+                const profile = await fetchProfile(session?.user.id)
+
+                set({
+                    user: mapSupabaseUser(session.user, profile),
+                    isAuthenticated: true,
+                    isLoading: false
+                })
+            }
+            else {
+                set({
+                    isLoading: false
+                })
+            }
+
+        })
+
+        supabase.auth.onAuthStateChange( async (_event, session) => {
+            if (session?.user) {
+
+                const profile = await fetchProfile(session.user.id);
+
+                set({
+                    user: mapSupabaseUser(session.user, profile),
+                    isAuthenticated: true,
+                    isLoading: false
+                })
+            }
+            else {
+                set({
+                    user: null,
+                    isAuthenticated: false,
+                    isLoading: false
+                })
+            }
+        }) 
+
+    }
+
 }))

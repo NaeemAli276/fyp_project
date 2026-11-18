@@ -23,3 +23,4 @@ app.include_router(moderation.router, prefix='/api/v1')
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+

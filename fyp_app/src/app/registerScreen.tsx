@@ -87,14 +87,13 @@ const registerScreen = () => {
 
         {/* input fields */}
         <View
-          className='flex flex-col w-full h-auto gap-2'
+          className='flex flex-col w-full h-auto gap-7'
         >
         
           {/* handle */}
           <CustomTextInput
             name='Email'
             placeholder='Enter your email...'
-            error_message=''
             type='text'
             value={form_fields.handle}
             onChangeText={(text: string) => handle_change_text_fields(text, 'email')}
@@ -104,7 +103,6 @@ const registerScreen = () => {
           <CustomTextInput
             name='Handle'
             placeholder='Enter your handle...'
-            error_message=''
             type='text'
             value={form_fields.handle}
             onChangeText={(text: string) => handle_change_text_fields(text, 'handle')}
@@ -117,7 +115,6 @@ const registerScreen = () => {
             <CustomTextInput
               name='Password'
               placeholder='Enter your password...'
-              error_message=''
               type={show_password ? 'text' : 'password'}
               value={form_fields.password}
               onChangeText={(text: string) => handle_change_text_fields(text, 'password')}
@@ -142,7 +139,6 @@ const registerScreen = () => {
             <CustomTextInput
               name='Confirm password'
               placeholder='Retype your password...'
-              error_message=''
               type={show_password ? 'text' : 'password'}
               value={form_fields.confirm_password}
               onChangeText={(text: string) => handle_change_text_fields(text, 'confirm_password')}

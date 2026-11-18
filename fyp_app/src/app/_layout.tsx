@@ -4,6 +4,8 @@ import { useFonts } from 'expo-font'
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { DevToolsBubble } from 'react-native-react-query-devtools';
 import * as Clipboard from 'expo-clipboard'; // For Expo
+import { useEffect } from "react";
+import { useAuthStore } from "@/stores/authStore";
 
 const queryClient = new QueryClient()
 
@@ -29,7 +31,10 @@ export default function TabLayout() {
     'Poppins-Bold': require('../../assets/fonts/Poppins/Poppins-Bold.ttf'),
     'Poppins-Black': require('../../assets/fonts/Poppins/Poppins-Black.ttf'),
   })
-  
+
+  useEffect(() => {
+    useAuthStore.getState().initialise()
+  }, [])
 
   return (
     <QueryClientProvider

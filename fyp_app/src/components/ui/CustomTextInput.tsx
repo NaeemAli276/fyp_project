@@ -5,7 +5,6 @@ import DynamicIcon from './DynamicIcon'
 interface CustomTextInputProps {
     name: string
     placeholder: string
-    error_message: string
     type: string
     value: string
     onChangeText: (text: string) => void,
@@ -14,7 +13,6 @@ interface CustomTextInputProps {
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
     name = 'handle',
     placeholder = 'Enter your handle...',
-    error_message = '',
     type = 'text',
     value = '',
     onChangeText,
@@ -46,11 +44,6 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
                     secureTextEntry={type === 'password' ? true : false}
                 />    
             </View>
-            <Text
-                className='pl-1 text-sm text-rose-400'
-            >
-                {error_message}
-            </Text>
         </View>
     )
 }

@@ -7,6 +7,7 @@ import CustomTextInput from '@/components/ui/CustomTextInput'
 import { useColorScheme } from 'react-native' 
 import CustomCheckbox from '@/components/ui/CustomCheckbox'
 import LongBtn from '@/components/ui/LongBtn'
+import { useAuthStore } from '@/stores/authStore'
 
 interface form_fields {
   email: string
@@ -16,7 +17,7 @@ interface form_fields {
 
 const loginScreen = () => {
   
-  const router = useRouter()
+  const login = useAuthStore((state) => state.login)
 
   const colorScheme = useColorScheme()
 
@@ -28,6 +29,8 @@ const loginScreen = () => {
     remember_me: false
   })
 
+  const [error, set_error] = useState()
+
   const handle_change_text_fields = (text: string, current_field: string): void => {
     
     set_form_fields({
@@ -37,8 +40,21 @@ const loginScreen = () => {
 
   }
 
+  const handle_login = async (): Promise<void> => {
+    
+    try {
+      await login(form_fields.email, form_fields.password)
+    }
+    catch (error: any) {
+      set_error(error.message)      
+    }
+
+    console.log("this is clicked")
+
+  }
+
   useEffect(() => {
-    console.log(form_fields.remember_me)
+    console.log(form_fields)
   }, [form_fields])
 
   return (
@@ -85,14 +101,13 @@ const loginScreen = () => {
 
         {/* input fields */}
         <View
-          className='flex flex-col w-full h-auto gap-2'
+          className='flex flex-col w-full h-auto gap-7'
         >
           
           {/* handle */}
           <CustomTextInput
             name='Email'
             placeholder='Enter your email...'
-            error_message=''
             type='text'
             value={form_fields.email}
             onChangeText={(text: string) => handle_change_text_fields(text, 'email')}
@@ -105,7 +120,6 @@ const loginScreen = () => {
             <CustomTextInput
               name='Password'
               placeholder='Enter your password...'
-              error_message=''
               type={show_password ? 'text' : 'password'}
               value={form_fields.password}
               onChangeText={(text: string) => handle_change_text_fields(text, 'password')}
@@ -134,11 +148,19 @@ const loginScreen = () => {
 
         {/* login btn and redirect btn */}
         <View
-          className='flex flex-col justify-between w-full h-1/4'
+          className='flex flex-col gap-5 w-full h-[30%]'
         >
+
+          {/* error text */}
+          <Text
+            className='text-sm text-rose-500 font-poppins-regular'
+          >
+            {error}
+          </Text>
+
           <LongBtn
             name='Login'
-            onPress={() => {}}
+            onPress={() => handle_login()}
           />
 
           {/* register redirect btn */}
