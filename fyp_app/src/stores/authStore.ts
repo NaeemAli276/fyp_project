@@ -9,7 +9,8 @@ interface AuthState {
     user: User | null
     isAuthenticated: boolean
     isLoading: boolean
-    login: (email: string, password: string) => Promise<void>
+    login: (email: string, password: string) => Promise<void>,
+    register: (email: string, password: string, displayName: string) => Promise<void>
     logout: () => Promise<void>
     initialise: () => void
 }
@@ -37,19 +38,27 @@ export const useAuthStore = create<AuthState>((set) => ({
     login: async (email, password) => {
                 
         const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password
-        })        
+            email: email.trim().toLowerCase(),
+            password: password
+        })       
+
+        console.log("data from login: ", data)
         
-        if (error) console.log(error.message)
+        if (error) {
+            console.log("error from login: ", error.message)
+            throw new Error(error.message)
+        }
 
         const profile = await fetchProfile(data.user.id)
+        console.log("profile from login: ", profile)
 
-        set({
-            user: mapSupabaseUser(data.user, profile),
-            isAuthenticated: true,
-            isLoading: false
-        })
+        if (data.user !== null) {
+            set({
+                user: mapSupabaseUser(data.user, profile),
+                isAuthenticated: true,
+                isLoading: false
+            })
+        }
 
     },
 
@@ -60,6 +69,36 @@ export const useAuthStore = create<AuthState>((set) => ({
             isAuthenticated: false,
             isLoading: false
         })
+    },
+
+    register: async (email, password, displayName) => {
+
+        const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: { display_name: displayName }
+            }
+        })
+
+        if (error) {
+            throw new Error(error.message)
+        }
+
+        if (!data.session) {
+            throw new Error(
+                'Check your email to confirm your account before logging in.'
+            )
+        }
+
+        // user is logged in immediately because email confirmation is off
+        const profile = await fetchProfile(data.user!.id)
+        set({
+            user: mapSupabaseUser(data.user!, profile),
+            isAuthenticated: true,
+            isLoading: false
+        })
+
     },
 
     initialise: async () => {

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DynamicIcon  from '../components/ui/DynamicIcon'
@@ -9,18 +9,20 @@ import CustomTextInput from '@/components/ui/CustomTextInput'
 import { useColorScheme } from 'react-native' 
 import CustomCheckbox from '@/components/ui/CustomCheckbox'
 import LongBtn from '@/components/ui/LongBtn'
+import { useAuthStore } from '@/stores/authStore'
 
 type form_fields = {
   email: string
   handle: string
   password: string,
-  confirm_password: string
   remember_me: boolean
 }
 
 const registerScreen = () => {
   
   const colorScheme = useColorScheme()
+  
+  const { register, isAuthenticated } = useAuthStore()
 
   const router = useRouter()
 
@@ -30,9 +32,10 @@ const registerScreen = () => {
     email: '',
     handle: '',
     password: '',
-    confirm_password: '',
     remember_me: false
   })
+
+  const [error, set_error] = useState<string>('')
 
   const handle_change_text_fields = (text: string, current_field: string): void => {
     
@@ -40,6 +43,21 @@ const registerScreen = () => {
       ...form_fields,
       [current_field]: text
     })
+
+  }
+
+  const handle_register = async (): Promise<void> => {
+    
+    try {
+      set_error('')
+      await register(form_fields.email, form_fields.password ,form_fields.handle)
+    }
+    catch (error: any) {
+      set_error(error.message)   
+      Alert.alert(error.message)   
+    }
+
+    console.log("this is clicked")
 
   }
   
@@ -50,7 +68,7 @@ const registerScreen = () => {
 
       {/* go back btn */}
       <View
-        className='w-auto h-auto p-8 pt-4 pb-10'
+        className='w-auto h-auto p-8 pt-4 pb-24'
       >
         <Link
           href={'/splashScreen'}
@@ -90,12 +108,13 @@ const registerScreen = () => {
           className='flex flex-col w-full h-auto gap-7'
         >
         
-          {/* handle */}
+          {/* email */}
           <CustomTextInput
             name='Email'
             placeholder='Enter your email...'
+            onPress={() => set_error('')}
             type='text'
-            value={form_fields.handle}
+            value={form_fields.email}
             onChangeText={(text: string) => handle_change_text_fields(text, 'email')}
           />
 
@@ -103,6 +122,7 @@ const registerScreen = () => {
           <CustomTextInput
             name='Handle'
             placeholder='Enter your handle...'
+            onPress={() => set_error('')}
             type='text'
             value={form_fields.handle}
             onChangeText={(text: string) => handle_change_text_fields(text, 'handle')}
@@ -115,33 +135,10 @@ const registerScreen = () => {
             <CustomTextInput
               name='Password'
               placeholder='Enter your password...'
+              onPress={() => set_error('')}
               type={show_password ? 'text' : 'password'}
               value={form_fields.password}
               onChangeText={(text: string) => handle_change_text_fields(text, 'password')}
-            />
-            <TouchableOpacity
-              className='absolute p-1 top-3.5 right-3'
-              onPress={() => set_show_password(!show_password)}
-            >
-              <DynamicIcon
-                name={show_password ? 'Eye' : 'EyeOff'}
-                size={24}
-                strokeWidth={0.8}
-                color={colorScheme === 'dark' ? '#eff6ff' : '#172554'}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {/* confirm password */}
-          <View
-            className='relative w-full h-auto'
-          > 
-            <CustomTextInput
-              name='Confirm password'
-              placeholder='Retype your password...'
-              type={show_password ? 'text' : 'password'}
-              value={form_fields.confirm_password}
-              onChangeText={(text: string) => handle_change_text_fields(text, 'confirm_password')}
             />
             <TouchableOpacity
               className='absolute p-1 top-3.5 right-3'
@@ -165,28 +162,35 @@ const registerScreen = () => {
 
         </View>
 
-        {/* login btn and redirect btn */}
+        {/* register btn and redirect btn */}
         <View
-          className='flex flex-col justify-between w-full h-[12%]'
+          className='flex flex-col w-full gap-5 h-1/4'
         >
+
+          {/* error text */}
+          <Text
+            className={`text-center text-sm text-rose-500 font-poppins-regular`}
+          >
+            {error}
+          </Text>
+
           <LongBtn
             name='Register'
-            onPress={() => {}}
+            onPress={() => handle_register()}
           />
 
           {/* register redirect btn */}
           <Link
-            href={'/loginScreen'}
+            href={'/registerScreen'}
           >
             <Text
               className='text-center text-text/80 dark:text-background/80 font-poppins-regular'
             >
-              Already have an account? <Text className='text-primary dark:text-dark_primary'>Sign in</Text>
+              Don't have an account? <Text className='text-primary dark:text-dark_primary'>Sign up</Text>
             </Text>
           </Link>
 
         </View>
-
       </View>
 
     </SafeAreaView>

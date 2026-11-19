@@ -8,6 +8,7 @@ interface CustomTextInputProps {
     type: string
     value: string
     onChangeText: (text: string) => void,
+    onPress?: () => void
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
@@ -16,6 +17,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
     type = 'text',
     value = '',
     onChangeText,
+    onPress
 }) => {
 
 
@@ -42,6 +44,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
                     value={value}
                     onChangeText={onChangeText}
                     secureTextEntry={type === 'password' ? true : false}
+                    onPress={onPress}
                 />    
             </View>
         </View>

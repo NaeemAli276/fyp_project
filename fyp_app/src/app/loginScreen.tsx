@@ -17,7 +17,7 @@ interface form_fields {
 
 const loginScreen = () => {
   
-  const login = useAuthStore((state) => state.login)
+  const { login, isAuthenticated } = useAuthStore()
 
   const colorScheme = useColorScheme()
 
@@ -29,7 +29,9 @@ const loginScreen = () => {
     remember_me: false
   })
 
-  const [error, set_error] = useState()
+  const router = useRouter()
+
+  const [error, set_error] = useState<string>('')
 
   const handle_change_text_fields = (text: string, current_field: string): void => {
     
@@ -43,13 +45,14 @@ const loginScreen = () => {
   const handle_login = async (): Promise<void> => {
     
     try {
+      set_error('')
       await login(form_fields.email, form_fields.password)
     }
     catch (error: any) {
       set_error(error.message)      
     }
 
-    console.log("this is clicked")
+    console.log("authenticted: ", isAuthenticated)
 
   }
 
@@ -107,6 +110,7 @@ const loginScreen = () => {
           {/* handle */}
           <CustomTextInput
             name='Email'
+            onPress={() => set_error('')}
             placeholder='Enter your email...'
             type='text'
             value={form_fields.email}
@@ -119,6 +123,7 @@ const loginScreen = () => {
           > 
             <CustomTextInput
               name='Password'
+              onPress={() => set_error('')}
               placeholder='Enter your password...'
               type={show_password ? 'text' : 'password'}
               value={form_fields.password}
@@ -153,7 +158,7 @@ const loginScreen = () => {
 
           {/* error text */}
           <Text
-            className='text-sm text-rose-500 font-poppins-regular'
+            className={`text-center text-sm text-rose-500 font-poppins-regular`}
           >
             {error}
           </Text>

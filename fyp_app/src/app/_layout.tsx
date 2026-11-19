@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Redirect, Stack, useRouter } from "expo-router";
 import '../global.css'
 import { useFonts } from 'expo-font'
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
@@ -18,8 +18,13 @@ const onCopy = async (text: string) => {
   }
 };
 
+
 export default function TabLayout() {
-  
+
+  const { isAuthenticated, isLoading } = useAuthStore()
+
+  const router = useRouter()
+
   const [fontsLoaded, error] = useFonts({
     'Poppins-ExtraLight': require('../../assets/fonts/Poppins/Poppins-ExtraLight.ttf'),
     'Poppins-Light': require('../../assets/fonts/Poppins/Poppins-Light.ttf'),
@@ -35,6 +40,17 @@ export default function TabLayout() {
   useEffect(() => {
     useAuthStore.getState().initialise()
   }, [])
+
+  useEffect(() => {
+    // Wait until fonts and auth check are finished before navigating
+    if (!fontsLoaded || isLoading) return;
+
+    if (isAuthenticated) {
+      router.replace('/');
+    } else {
+      router.replace('/splashScreen');
+    }
+  }, [isAuthenticated, isLoading]);
 
   return (
     <QueryClientProvider

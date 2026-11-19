@@ -2,6 +2,7 @@ import { View, Text, useColorScheme } from 'react-native'
 import React from 'react'
 import IconBtn from '@/components/ui/IconBtn'
 import { useRouter } from 'expo-router'
+import SettingsBtn from '@/components/ui/SettingsBtn'
 
 const settingsScreen = () => {
   
@@ -37,7 +38,12 @@ const settingsScreen = () => {
         className='flex flex-col w-full h-auto gap-4'
       >
         
-        
+        {/* logout btn */}
+        <SettingsBtn
+          name='Logout'
+          icon_name='LogOut'
+        />
+
       </View>
 
     </View>

@@ -7,12 +7,14 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=ENV_FILE, extra="ignore")
 
     supabase_url: str
-    supabase_service_role_key: str
-    supabase_jwt_secret: str
+    supabase_secret_key: str  # Holds your sb_secret_... key
     supabase_jwt_aud: str = "authenticated"
 
-    expo_push_url: str = "http://exp.host/--/api/v2/push/send"
-
+    expo_push_url: str = "https://exp.host"
     environment: str = "development"
+
+    @property
+    def supabase_jwks_url(self) -> str:
+        return f"{self.supabase_url.rstrip('/')}/auth/v1/.well-known/jwks.json"
 
 settings = Settings()

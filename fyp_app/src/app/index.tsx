@@ -1,5 +1,5 @@
 import { FlatList, View, Text, useColorScheme, ActivityIndicator, TouchableOpacity } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Redirect } from 'expo-router'
 import { useAuthStore } from '@/stores/authStore'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -17,7 +17,7 @@ const ContactListScreen = () => {
 
   const action_sheet_ref = useRef<ActionSheetRef>(null)
 
-  const { isAuthenticated } = useAuthStore()
+  const { isAuthenticated, user } = useAuthStore()
 
   const [search_query, set_search_query] = useState<string>('')
 
@@ -55,6 +55,10 @@ const ContactListScreen = () => {
   const openNewContactDrawer = (): void => {
     action_sheet_ref.current?.show()
   }
+
+  useEffect(() => {
+    console.log(user)
+  }, [])
 
   if (!isAuthenticated) {
     return (
