@@ -2,7 +2,6 @@ import { View, Text, Settings, useColorScheme, TouchableOpacity } from 'react-na
 import React from 'react'
 import DynamicIcon from './DynamicIcon'
 import { LucideProps } from 'lucide-react-native'
-import { useAuthStore } from '@/stores/authStore'
 
 interface SettingsBtn {
     name: string
@@ -20,17 +19,15 @@ const SettingsBtn: React.FC<SettingsBtn> = ({
 
     const colorScheme = useColorScheme()
 
-    const { logout } = useAuthStore()
-
     return (
         <TouchableOpacity
             className='flex flex-row items-center w-full h-auto gap-4'
-            onPress={() => logout()}
+            onPress={onPress}
         >
             <DynamicIcon
                 name={icon_name}
                 size={24}
-                color={icon_colour === 'default' ? '#f43f5e' : 
+                color={icon_colour === 'red' ? '#f43f5e' : 
                     colorScheme === 'dark'
                     ?   '#5b98ff'
                     :   '#3b82f6'

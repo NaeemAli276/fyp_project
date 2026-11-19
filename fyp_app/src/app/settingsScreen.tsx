@@ -3,12 +3,15 @@ import React from 'react'
 import IconBtn from '@/components/ui/IconBtn'
 import { useRouter } from 'expo-router'
 import SettingsBtn from '@/components/ui/SettingsBtn'
+import { useAuthStore } from '@/stores/authStore'
 
 const settingsScreen = () => {
   
   const colorScheme = useColorScheme()
 
   const router = useRouter()
+
+  const { logout } = useAuthStore()
 
   return (
     <View
@@ -42,6 +45,8 @@ const settingsScreen = () => {
         <SettingsBtn
           name='Logout'
           icon_name='LogOut'
+          onPress={() => logout()}
+          icon_colour={'red'}
         />
 
       </View>

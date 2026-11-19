@@ -1,6 +1,5 @@
 import { Redirect, Stack, useRouter } from "expo-router";
 import '../global.css'
-import { useFonts } from 'expo-font'
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { DevToolsBubble } from 'react-native-react-query-devtools';
 import * as Clipboard from 'expo-clipboard'; // For Expo
@@ -25,25 +24,13 @@ export default function TabLayout() {
 
   const router = useRouter()
 
-  const [fontsLoaded, error] = useFonts({
-    'Poppins-ExtraLight': require('../../assets/fonts/Poppins/Poppins-ExtraLight.ttf'),
-    'Poppins-Light': require('../../assets/fonts/Poppins/Poppins-Light.ttf'),
-    'Poppins-Thin': require('../../assets/fonts/Poppins/Poppins-Thin.ttf'),
-    'Poppins-light': require('../../assets/fonts/Poppins/Poppins-Light.ttf'),
-    'Poppins-Regular': require('../../assets/fonts/Poppins/Poppins-Regular.ttf'),
-    'Poppins-Medium': require('../../assets/fonts/Poppins/Poppins-Medium.ttf'),
-    'Poppins-SemiBold': require('../../assets/fonts/Poppins/Poppins-SemiBold.ttf'),
-    'Poppins-Bold': require('../../assets/fonts/Poppins/Poppins-Bold.ttf'),
-    'Poppins-Black': require('../../assets/fonts/Poppins/Poppins-Black.ttf'),
-  })
-
   useEffect(() => {
     useAuthStore.getState().initialise()
   }, [])
 
   useEffect(() => {
     // Wait until fonts and auth check are finished before navigating
-    if (!fontsLoaded || isLoading) return;
+    if (isLoading) return;
 
     if (isAuthenticated) {
       router.replace('/');
@@ -61,13 +48,15 @@ export default function TabLayout() {
           headerShown: false
         }}
       >
-        <Stack.Screen name="index"/>
+        <Stack.Protected guard={isAuthenticated}>
+          <Stack.Screen name="index"/>
+          <Stack.Screen name="settingsScreen"/>
+          <Stack.Screen name="[id]"/>
+          <Stack.Screen name="searchPage"/>
+        </Stack.Protected>
+        <Stack.Screen name="splashScreen"/>
         <Stack.Screen name="loginScreen"/>
         <Stack.Screen name="registerScreen"/>
-        <Stack.Screen name="splashScreen"/>
-        <Stack.Screen name="settingsScreen"/>
-        <Stack.Screen name="[id]"/>
-        <Stack.Screen name="searchPage"/>
       </Stack>
       <DevToolsBubble onCopy={onCopy} queryClient={queryClient} />
     </QueryClientProvider>
