@@ -1,3 +1,5 @@
+import { Database } from "./supabase_types";
+
 export type RootStackParamList = {
     index: undefined
     loginScreen: undefined; 
@@ -16,4 +18,12 @@ export interface User {
 export interface Contact extends User {
     recent_message: string
     time: string
+}
+
+export type Profile = Database['public']['Tables']['profiles']['Row']
+
+export interface public_profile {
+    id: string
+    display_name: string
+    avatar_url: string | null
 }

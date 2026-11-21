@@ -1,6 +1,7 @@
 import 'react-native-url-polyfill'
 import * as SecureStore from 'expo-secure-store'
 import { createClient } from '@supabase/supabase-js'
+import { Database } from '../constants/supabase_types'
 
 const ExpoSecureStoreAdapter = {
     getItem: (key: string) => SecureStore.getItemAsync(key),
@@ -8,7 +9,7 @@ const ExpoSecureStoreAdapter = {
     removeItem: (key: string) => SecureStore.deleteItemAsync(key) 
 }
 
-export const supabase = createClient(
+export const supabase = createClient<Database>(
     process.env.EXPO_PUBLIC_SUPABASE_URL!,
     process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
     {

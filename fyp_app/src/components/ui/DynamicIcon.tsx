@@ -18,7 +18,9 @@ import {
   Dot,
   UserPlus,
   LogOut,
-  User
+  ChevronRight,
+  User,
+  EllipsisVertical
 } from 'lucide-react-native';
 import type { LucideProps } from 'lucide-react-native';
 
@@ -43,7 +45,9 @@ const iconMap = {
   Dot,
   UserPlus,
   LogOut,
-  User
+  ChevronRight,
+  User,
+  EllipsisVertical
 } as const;
 
 type IconName = keyof typeof iconMap;

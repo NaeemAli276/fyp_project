@@ -5,6 +5,7 @@ import { DevToolsBubble } from 'react-native-react-query-devtools';
 import * as Clipboard from 'expo-clipboard'; // For Expo
 import { useEffect } from "react";
 import { useAuthStore } from "@/stores/authStore";
+import { useFonts } from 'expo-font'
 
 const queryClient = new QueryClient()
 
@@ -23,6 +24,18 @@ export default function TabLayout() {
   const { isAuthenticated, isLoading } = useAuthStore()
 
   const router = useRouter()
+
+  const [fontsLoaded, error] = useFonts({
+    'Poppins-ExtraLight': require('../../assets/fonts/Poppins/Poppins-ExtraLight.ttf'),
+    'Poppins-Light': require('../../assets/fonts/Poppins/Poppins-Light.ttf'),
+    'Poppins-Thin': require('../../assets/fonts/Poppins/Poppins-Thin.ttf'),
+    'Poppins-light': require('../../assets/fonts/Poppins/Poppins-Light.ttf'),
+    'Poppins-Regular': require('../../assets/fonts/Poppins/Poppins-Regular.ttf'),
+    'Poppins-Medium': require('../../assets/fonts/Poppins/Poppins-Medium.ttf'),
+    'Poppins-SemiBold': require('../../assets/fonts/Poppins/Poppins-SemiBold.ttf'),
+    'Poppins-Bold': require('../../assets/fonts/Poppins/Poppins-Bold.ttf'),
+    'Poppins-Black': require('../../assets/fonts/Poppins/Poppins-Black.ttf'),
+  })
 
   useEffect(() => {
     useAuthStore.getState().initialise()

@@ -42,15 +42,12 @@ export const useAuthStore = create<AuthState>((set) => ({
             password: password
         })       
 
-        console.log("data from login: ", data)
         
         if (error) {
-            console.log("error from login: ", error.message)
             throw new Error(error.message)
         }
 
         const profile = await fetchProfile(data.user.id)
-        console.log("profile from login: ", profile)
 
         if (data.user !== null) {
             set({
