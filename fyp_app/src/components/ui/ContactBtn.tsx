@@ -2,23 +2,21 @@ import { View, Text, useColorScheme, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { Image } from 'expo-image' 
 import DynamicIcon from './DynamicIcon'
-import { useRouter } from 'expo-router'
 
 interface ContactBtnProps {
     id: string
     name: string
-    avatar_url: string | any
+    avatar_url: string | any,
+    onPress: () => void
 }
 
 const ContactBtn: React.FC<ContactBtnProps> = ({
-    id,
     name,
-    avatar_url
+    avatar_url,
+    onPress
 }) => {
 
     const colorScheme = useColorScheme()
-
-    const router = useRouter()
 
     const [thumbnail_error, set_thumbnail_error] = useState(false)
         
@@ -29,10 +27,7 @@ const ContactBtn: React.FC<ContactBtnProps> = ({
     return (
         <TouchableOpacity
             className='flex flex-row items-center justify-between w-full h-auto gap-2 p-5 px-8'
-            onPress={() => router.push({
-                pathname: '/[id]',
-                params: { id: id }
-            })}
+            onPress={onPress}
         >
             <View
                 className='flex flex-row items-start justify-start w-4/5 h-auto gap-3'

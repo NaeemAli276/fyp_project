@@ -5,60 +5,39 @@ import { useAuthStore } from '@/stores/authStore'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useQuery } from '@tanstack/react-query' 
 import { Contact } from '@/constants/types'
-import ActionSheet, { ActionSheetRef } from "react-native-actions-sheet";
 import TopBar from '@/components/features/TopBar'
 import DynamicIcon from '@/components/ui/DynamicIcon'
 import VerboseBtn from '@/components/ui/VerboseBtn'
 import ContactCard from '@/components/features/ContactCard'
+import { supabase } from '@/lib/supbase'
 
 const ContactListScreen = () => {
   
   const colorScheme = useColorScheme()
 
-  const action_sheet_ref = useRef<ActionSheetRef>(null)
-
   const { isAuthenticated, user } = useAuthStore()
 
   const [search_query, set_search_query] = useState<string>('')
 
-  const [contacts, set_contacts] = useState<Contact[]>([
-    {
-      id: '1',
-      display_name: 'John Doe',
-      recent_message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis eius similique nulla',
-      time: '14:45',
-      avatar_url: 'https://picsum.photos/seed/b/200/200'
-    },
-    {
-      id: '2',
-      display_name: 'Jane Smith',
-      recent_message: 'earum voluptatum officiis commodi. Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.',
-      time: '16:23',
-      avatar_url: 'https://picsum.photos/seed/a/200/200'
-    },
-    {
-      id: '3',
-      display_name: 'Bob Jones',
-      recent_message: 'Magni sapiente corrupti blanditiis debitis obcaecati facere mollitia ipsum ut dolorem autem.',
-      time: '18:31',
-      avatar_url: null
-    },
+  const fetch_chats = async (): Promise<Contact[]> => {
+    
+    const { data, error } = await supabase.rpc('get_my_direct_contacts')
 
-  ])
+    if (error) {
+      console.error(error.message)
+      throw new Error(error.message)
+    }
+    else {
+      return data
+    }
+
+  }
 
   const { isLoading, error, data } = useQuery({
     queryKey: ['load_messages'],
-    queryFn: () => { return contacts },
-    initialData: contacts
+    queryFn: fetch_chats,
+    initialData: []
   })
-
-  const openNewContactDrawer = (): void => {
-    action_sheet_ref.current?.show()
-  }
-
-  useEffect(() => {
-    console.log(user)
-  }, [])
 
   if (!isAuthenticated) {
     return (
@@ -215,46 +194,24 @@ const ContactListScreen = () => {
             className={`${!isLoading && error === null && data.length > 0 ? 'flex' : 'hidden'} flex-col w-full h-full pt-5`}
           >
             <FlatList
-              data={contacts}
+              data={data}
               renderItem={({ item }) => (
                 <ContactCard
-                  recent_message={item.recent_message}
+                  // recent_message={item.recent_message}
                   display_name={item.display_name}
-                  id={item.id}
-                  time={item.time}
+                  user_id={item.user_id}
+                  // time={item.time}
                   avatar_url={item.avatar_url}
+                  chat_id={item.chat_id}
                 />
               )}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.user_id}
               className='flex flex-col gap-2'
             />
           </View>
 
         </View>
 
-        {/* menu for showing your detail btn or scan/input code btn */}
-        {/* <ActionSheet
-          ref={action_sheet_ref}
-          containerStyle={{ 
-            height: 4 * 56,
-            backgroundColor: colorScheme === 'dark' ? '#111827' : '#eff6ff',
-          }}
-        >
-          <View
-            className='flex flex-col w-full h-auto gap-8 p-6'
-          >
-            <VerboseBtn
-              icon_name={'UsersRoundCollaboration'}
-              btn_purpose='Share contact details'
-              onPress={() => {}}
-            />
-            <VerboseBtn
-              icon_name={'ScanQrCode'}
-              btn_purpose='Scan QR code or input code'
-              onPress={() => {}}
-            />
-          </View>
-        </ActionSheet> */}
       </View>
     )
   }

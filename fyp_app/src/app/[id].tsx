@@ -5,12 +5,17 @@ import DynamicIcon from '@/components/ui/DynamicIcon'
 import IconBtn from '@/components/ui/IconBtn'
 import { Image } from 'expo-image'
 import MessageInput from '@/components/ui/MessageInput' 
+import { Message } from '../constants/types'
 
 const contactScreen = () => {
 
     const router = useRouter()
 
     const colorScheme = useColorScheme()
+
+    const fakeMessages: Message[] = [
+        
+    ] 
 
     const user = {
         id: '1232',
@@ -77,11 +82,21 @@ const contactScreen = () => {
                                     />
                                 </View>
                         }
-                        <Text
-                            className='pb-0.5 text-xl font-poppins-medium text-background'
+                        <View
+                            className='flex flex-col w-auto h-auto gap-0'
                         >
-                            {user.display_name}
-                        </Text>
+                            <Text
+                                className='text-sm/tight text-background/80 font-poppins-light'
+                            >
+                                Handle:
+                            </Text>
+                            <Text
+                                className='text-xl font-poppins-medium text-background'
+                            >
+                                {user.display_name}
+                            </Text>    
+                        </View>
+                        
                     </View>
 
                 </View>

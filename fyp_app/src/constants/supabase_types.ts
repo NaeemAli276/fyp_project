@@ -252,7 +252,16 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      create_direct_chat: { Args: { other_user_id: string }; Returns: string }
+      get_my_direct_contacts: {
+        Args: never
+        Returns: {
+          avatar_url: string
+          chat_id: string
+          display_name: string
+          user_id: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

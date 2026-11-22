@@ -7,11 +7,12 @@ import DynamicIcon from '../ui/DynamicIcon'
 import { Image } from 'expo-image'
 
 const ContactCard: React.FC<Contact> = ({
-    id,
+    user_id,
     display_name,
-    recent_message,
-    time,
-    avatar_url
+    // recent_message = null,
+    // time,
+    avatar_url,
+    chat_id
 }) => {
     const router = useRouter()
     const colorScheme = useColorScheme()
@@ -24,10 +25,10 @@ const ContactCard: React.FC<Contact> = ({
 
     return (
         <TouchableOpacity
-            className='flex flex-row w-full h-[72px] p-3 px-8'
+            className='flex flex-row w-full h-[72px] p-3 px-8 items-center'
             onPress={() => router.push({
                 pathname: '/[id]',
-                params: { id: id }
+                params: { id: chat_id }
             })}
         >
             {/* avatar_url, name and message truncated */}
@@ -61,20 +62,24 @@ const ContactCard: React.FC<Contact> = ({
                     <Text className='text-lg font-poppins-medium text-text dark:text-background'>
                         {display_name}
                     </Text>
-                    <Text
+                    {/* <Text
                         className='text-sm font-poppins-light text-text/90 dark:text-background/80'
                         numberOfLines={1}
                     >
-                        {truncateText(recent_message, 30)}
-                    </Text>
+                        {
+                            recent_message !== null
+                            ?   truncateText(recent_message, 30)
+                            :   'No message'
+                        }
+                    </Text> */}
                 </View>
             </View>
             
             {/* time and notifications */}
             <View className='flex flex-col items-end w-1/5 h-full gap-1'>
-                <Text className='text-sm font-poppins-light text-text/90 dark:text-background/90'>
+                {/* <Text className='text-sm font-poppins-light text-text/90 dark:text-background/90'>
                     {time}
-                </Text>
+                </Text> */}
             </View>
         </TouchableOpacity>
     )

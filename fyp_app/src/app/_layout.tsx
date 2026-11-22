@@ -43,12 +43,12 @@ export default function TabLayout() {
 
   useEffect(() => {
     // Wait until fonts and auth check are finished before navigating
-    if (isLoading) return;
+    if (isLoading) return router.replace('/splashScreen');
 
     if (isAuthenticated) {
       router.replace('/');
     } else {
-      router.replace('/splashScreen');
+      router.replace('/greetingScreen');
     }
   }, [isAuthenticated, isLoading]);
 
@@ -68,6 +68,7 @@ export default function TabLayout() {
           <Stack.Screen name="searchPage"/>
         </Stack.Protected>
         <Stack.Screen name="splashScreen"/>
+        <Stack.Screen name="greetingScreen"/>
         <Stack.Screen name="loginScreen"/>
         <Stack.Screen name="registerScreen"/>
       </Stack>

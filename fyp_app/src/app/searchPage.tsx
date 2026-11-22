@@ -32,7 +32,7 @@ const searchPage = () => {
             .from('profiles')
             .select('id, display_name, avatar_url')
             .like('display_name', `%${debounced_term}%`)
-            .neq('id', user?.id ?? '')   // exclude yourself
+            .neq('id', user?.user_id ?? '')   // exclude yourself
             .limit(10)
 
 
@@ -44,6 +44,15 @@ const searchPage = () => {
         console.log(data)
         return data ?? []
 
+    }
+
+    const create_chat = async (otherUserId: string) => {
+
+        const { data: chatId, error } = await supabase.rpc('create_direct_chat', {
+            other_user_id: otherUserId,
+        })
+        if (error) throw new Error(error.message)
+        router.back()
     }
 
     const { isLoading, error, data } = useQuery({
@@ -233,6 +242,7 @@ const searchPage = () => {
                             name={item.display_name}
                             id={item.id}
                             avatar_url={item.avatar_url}
+                            onPress={() => create_chat(item.id)}
                         />
                     )}
                 />

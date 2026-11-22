@@ -2,12 +2,12 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 
-interface SplashScreenBtnProps {
+interface GreetingBtnProps {
     ftn: () => void
     name: string,
 }
 
-const SplashScreenBtn: React.FC<SplashScreenBtnProps> = ({
+const GreetingBtn: React.FC<GreetingBtnProps> = ({
     ftn,
     name,
 }) => {
@@ -29,4 +29,4 @@ const SplashScreenBtn: React.FC<SplashScreenBtnProps> = ({
     )
 }
 
-export default SplashScreenBtn
+export default GreetingBtn
