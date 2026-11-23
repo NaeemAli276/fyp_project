@@ -1,5 +1,6 @@
 import {
-  Box,
+  Vault,
+  Send,
   ArrowLeft,
   Eye,
   EyeOff,
@@ -26,7 +27,8 @@ import type { LucideProps } from 'lucide-react-native';
 
 
 const iconMap = {
-  Box,
+  Vault,
+  Send,
   ArrowLeft,
   Eye,
   EyeOff,

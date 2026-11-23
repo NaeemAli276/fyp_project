@@ -1,38 +1,53 @@
-import { View, Text, TouchableOpacity, useColorScheme } from 'react-native'
+import { View, Text, TouchableOpacity, useColorScheme, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useState } from 'react'
-import { useRouter } from 'expo-router'
+import { useLocalSearchParams, useRouter } from 'expo-router'
 import DynamicIcon from '@/components/ui/DynamicIcon'
 import IconBtn from '@/components/ui/IconBtn'
 import { Image } from 'expo-image'
 import MessageInput from '@/components/ui/MessageInput' 
-import { Message } from '../constants/types'
+import { Message, User } from '../constants/types'
 
 const contactScreen = () => {
 
+    // navigation
     const router = useRouter()
 
+    // theme
     const colorScheme = useColorScheme()
 
+    // retrieving the other user as well the chat id    
+    const { chat_id, user } = useLocalSearchParams<{ chat_id: string, user: string }>()
+
+    const parsedUser = JSON.parse(user)
+
+    // temporary data
     const fakeMessages: Message[] = [
-        
+        {
+            id: '12424234',
+            chat_id: 'c50b4288-4838-418e-9527-e10bbbd0636c',
+            sender_id: '9023',
+            content: ''
+        }
     ] 
 
-    const user = {
-        id: '1232',
-        display_name: 'John Doe',
-        avatar_url: 'https://picsum.photos/seed/v/200/200'
-    }
+    const [message_input, set_message_input] = useState<string>('')
+
+    // user image at the top
 
     const [thumbnail_error, set_thumbnail_error] = useState(false)
     
-    const imageSource = typeof user.avatar_url === 'string' 
-        ? { uri: user.avatar_url } 
-        : user.avatar_url
+    const imageSource = typeof parsedUser.avatar_url === 'string' 
+        ? { uri: parsedUser.avatar_url } 
+        : parsedUser.avatar_url
 
+
+    const handle_send_message = (): void => {
+        
+    }
 
     return (
         <View
-            className='relative flex flex-col w-full h-screen gap-4 bg-background dark:bg-dark_background'
+            className='flex flex-col w-full h-screen gap-0 bg-background dark:bg-dark_background'
         >
             
             {/* back btn, name and options */}
@@ -58,7 +73,7 @@ const contactScreen = () => {
                         className='flex flex-row items-center w-auto h-auto gap-3'
                     >
                         {
-                            !thumbnail_error && Boolean(user.avatar_url)
+                            !thumbnail_error && Boolean(parsedUser.avatar_url)
                             ?   <Image
                                     source={imageSource}
                                     onError={() => set_thumbnail_error(true)}
@@ -93,7 +108,7 @@ const contactScreen = () => {
                             <Text
                                 className='text-xl font-poppins-medium text-background'
                             >
-                                {user.display_name}
+                                {parsedUser.display_name}
                             </Text>    
                         </View>
                         
@@ -110,7 +125,18 @@ const contactScreen = () => {
 
             </View>
 
-            <MessageInput/>
+            {/* messages and message input */}
+            <KeyboardAvoidingView
+                className='relative w-full h-[85%]'
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+            >
+                <MessageInput
+                    value={message_input}
+                    onChangeText={(text: string) => set_message_input(text)}
+                    onPress={() => handle_send_message()}
+                />
+            </KeyboardAvoidingView>
 
         </View>
     )

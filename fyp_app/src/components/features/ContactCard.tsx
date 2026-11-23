@@ -28,7 +28,14 @@ const ContactCard: React.FC<Contact> = ({
             className='flex flex-row w-full h-[72px] p-3 px-8 items-center'
             onPress={() => router.push({
                 pathname: '/[id]',
-                params: { id: chat_id }
+                params: { 
+                    id: chat_id, 
+                    user: JSON.stringify({
+                        id: user_id,
+                        display_name: display_name,
+                        avatar_url: avatar_url
+                    }) 
+                }
             })}
         >
             {/* avatar_url, name and message truncated */}
@@ -59,6 +66,11 @@ const ContactCard: React.FC<Contact> = ({
                         </View>
                 }
                 <View className='flex flex-col w-full h-full gap-0'>
+                    <Text
+                        className='text-sm/tight font-poppins-regular text-text/80 dark:text-background/80'
+                    >
+                        Handle:
+                    </Text>
                     <Text className='text-lg font-poppins-medium text-text dark:text-background'>
                         {display_name}
                     </Text>

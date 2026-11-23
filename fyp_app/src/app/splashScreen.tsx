@@ -12,10 +12,10 @@ const splashScreen = () => {
         >
             {/* icon */}
             <View
-                className='flex dark:hidden'
+                className='flex'
             >
                 <DynamicIcon
-                    name='Box'
+                    name='Vault'
                     size={36}
                     strokeWidth={1.5}
                     color={

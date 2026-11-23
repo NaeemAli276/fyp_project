@@ -2,9 +2,7 @@ import { View, Text, useColorScheme } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DynamicIcon from '@/components/ui/DynamicIcon'
-import { Redirect, useNavigation } from 'expo-router'
-import { NativeStackNavigationProp } from 'expo-router'
-import { RootStackParamList } from '@/constants/types' 
+import { Redirect, useRouter } from 'expo-router'
 import { useAuthStore } from '@/stores/authStore'
 import GreetingBtn from '@/components/ui/GreetingBtn'
 
@@ -12,7 +10,7 @@ const greetingScreen = () => {
   
   const colorScheme = useColorScheme()
 
-  const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+  const router = useRouter()
 
   const { isAuthenticated } = useAuthStore()
 
@@ -30,10 +28,10 @@ const greetingScreen = () => {
         >
           {/* icon */}
           <View
-            className='flex dark:hidden'
+            className='flex'
           >
             <DynamicIcon
-              name='Box'
+              name='Vault'
               size={36}
               strokeWidth={1.5}
               color={
@@ -59,11 +57,11 @@ const greetingScreen = () => {
           className='flex flex-col justify-end w-full h-full gap-4'
         >
           <GreetingBtn
-            ftn={() => nav.navigate('registerScreen')}
+            ftn={() => router.navigate('/registerScreen')}
             name='Register'
           />
           <GreetingBtn
-            ftn={() => nav.navigate('loginScreen')}
+            ftn={() => router.navigate('/loginScreen')}
             name='Login'
           />
         </View>
