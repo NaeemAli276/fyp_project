@@ -30,7 +30,7 @@ const ContactCard: React.FC<Contact> = ({
                 pathname: '/[id]',
                 params: { 
                     id: chat_id, 
-                    user: JSON.stringify({
+                    recipient: JSON.stringify({
                         id: user_id,
                         display_name: display_name,
                         avatar_url: avatar_url

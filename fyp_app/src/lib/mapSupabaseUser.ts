@@ -10,7 +10,7 @@ interface Profile {
 
 export function mapSupabaseUser(su: SupabaseUser, profile?: Profile | null): User {
     return {
-        id: su.id,
+        user_id: su.id,
         email: su.email!,
         // Prefer profile table data, fall back to metadata, then to email prefix
         avatar_url: profile?.avatar_url ?? su.user_metadata?.avatar_url ?? null,

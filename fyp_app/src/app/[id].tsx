@@ -5,21 +5,24 @@ import DynamicIcon from '@/components/ui/DynamicIcon'
 import IconBtn from '@/components/ui/IconBtn'
 import { Image } from 'expo-image'
 import MessageInput from '@/components/ui/MessageInput' 
-import { Message, User } from '../constants/types'
+import { Contact, Message, User } from '../constants/types'
 import MessageCard from '@/components/features/MessageCard'
+import { useAuthStore } from '@/stores/authStore'
 
 const contactScreen = () => {
 
     // navigation
     const router = useRouter()
 
+    const { user } = useAuthStore()
+
     // theme
     const colorScheme = useColorScheme()
 
     // retrieving the other user as well the chat id    
-    const { chat_id, user } = useLocalSearchParams<{ chat_id: string, user: string }>()
+    const { chat_id, recipient } = useLocalSearchParams<{ chat_id: string, recipient: string }>()
 
-    const parsedUser = JSON.parse(user)
+    const parsedUser: Contact = JSON.parse(recipient)
 
     // temporary data
     const fakeMessages: Message[] = [
@@ -48,7 +51,7 @@ const contactScreen = () => {
             content: 'amet consectetur adipisicing elit. Commodi, modi aliquam perferendis eaque qui omnis',
             media_url: null,
             message_type: 'message',
-            created_at: 'Sat 21 Nov 2026 14:06:28 GMT+0000'
+            created_at: 'Sat 21 Nov 2026 09:12:28 GMT+0000'
         }
     ] 
 
@@ -69,7 +72,7 @@ const contactScreen = () => {
 
     return (
         <View
-            className='flex flex-col w-full h-screen gap-0 bg-background dark:bg-dark_background'
+            className='flex flex-col w-full h-screen gap-4 bg-background dark:bg-dark_background'
         >
         
             {/* back btn, name and options */}
@@ -165,8 +168,12 @@ const contactScreen = () => {
                             media_url={item.media_url}
                             message_type={item.message_type}
                             created_at={item.created_at}
+                            avatar_url={item.sender_id === user?.user_id ? user?.avatar_url : parsedUser?.avatar_url}
                         />
                     )}
+                    scrollEnabled
+                    showsVerticalScrollIndicator
+                    contentContainerClassName='flex flex-col gap-4 pb-24'
                 />
                 <MessageInput
                     value={message_input}

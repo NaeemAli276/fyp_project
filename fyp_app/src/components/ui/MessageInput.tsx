@@ -1,6 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React from 'react'
 import DynamicIcon from './DynamicIcon'
+import { Contact } from '@/constants/types'
 
 interface MessageInputProps {
     value: string
@@ -11,7 +12,7 @@ interface MessageInputProps {
 const MessageInput: React.FC<MessageInputProps> = ({
     value,
     onChangeText,
-    onPress
+    onPress,
 }) => {
     return (
         <View

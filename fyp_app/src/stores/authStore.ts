@@ -106,6 +106,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 
                 const profile = await fetchProfile(session?.user.id)
 
+                console.log(profile)
+
                 set({
                     user: mapSupabaseUser(session.user, profile),
                     isAuthenticated: true,

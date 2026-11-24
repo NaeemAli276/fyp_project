@@ -39,6 +39,10 @@ const ContactListScreen = () => {
     initialData: []
   })
 
+  // useEffect(() => {
+  //   console.log(user)
+  // }, [])
+
   if (!isAuthenticated) {
     return (
       <Redirect href={'/splashScreen'}/>

@@ -4,7 +4,7 @@ export interface User {
     user_id: string
     display_name: string
     avatar_url: string | null
-    // email: string
+    email?: string
 }
 
 export interface Contact extends User {
