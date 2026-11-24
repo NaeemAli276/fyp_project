@@ -72,7 +72,7 @@ export default function TabLayout() {
         <Stack.Screen name="loginScreen"/>
         <Stack.Screen name="registerScreen"/>
       </Stack>
-      <DevToolsBubble onCopy={onCopy} queryClient={queryClient} />
+      {/* <DevToolsBubble onCopy={onCopy} queryClient={queryClient} /> */}
     </QueryClientProvider>
   );
 }

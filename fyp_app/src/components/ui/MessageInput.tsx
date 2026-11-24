@@ -15,24 +15,24 @@ const MessageInput: React.FC<MessageInputProps> = ({
 }) => {
     return (
         <View
-            className='absolute bottom-0 left-0 flex flex-row items-center w-full h-auto p-4 pr-6 pl-7 bg-background dark:bg-dark_background'
+            className='absolute bottom-0 left-0 flex flex-row items-center w-full h-auto p-4 px-7 bg-background dark:bg-dark_background'
         >
-            <TextInput
-                className='pt-3 pl-3.5 rounded-md bg-text/10 font-poppins-regular placeholder:text-text/60 text-text w-4/5 dark:bg-background/10 dark:text-background dark:placeholder:text-background/60'
-                placeholder='Send a message...'
-                value={value}
-                onChangeText={onChangeText}
-                onPress={onPress}
-            />
             <View
-                className='flex items-end justify-end w-1/5 h-auto'
+                className='relative w-full h-auto'
             >
+                <TextInput
+                    className='w-full p-4 rounded-full bg-text/10 font-poppins-regular placeholder:text-text/60 text-text dark:bg-background/10 dark:text-background dark:placeholder:text-background/60'
+                    placeholder='Send a message...'
+                    value={value}
+                    onChangeText={onChangeText}
+                    onPress={onPress}
+                />
                 <TouchableOpacity
-                    className='p-3 rounded-full bg-primary dark:bg-dark_primary'
+                    className='absolute p-2 rounded-full right-2 bottom-2 bg-primary dark:bg-dark_primary text-background'
                 >
                     <DynamicIcon
-                        name='Send'
-                        strokeWidth={1.5}
+                        strokeWidth={1.2}
+                        name={'Send'}
                         color={'#eff6ff'}
                     />
                 </TouchableOpacity>

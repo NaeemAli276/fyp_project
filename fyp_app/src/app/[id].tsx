@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, useColorScheme, KeyboardAvoidingView, Platform } from 'react-native'
+import { FlatList, View, Text, TouchableOpacity, useColorScheme, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import DynamicIcon from '@/components/ui/DynamicIcon'
@@ -6,6 +6,7 @@ import IconBtn from '@/components/ui/IconBtn'
 import { Image } from 'expo-image'
 import MessageInput from '@/components/ui/MessageInput' 
 import { Message, User } from '../constants/types'
+import MessageCard from '@/components/features/MessageCard'
 
 const contactScreen = () => {
 
@@ -25,8 +26,29 @@ const contactScreen = () => {
         {
             id: '12424234',
             chat_id: 'c50b4288-4838-418e-9527-e10bbbd0636c',
-            sender_id: '9023',
-            content: ''
+            sender_id: '33125fc3-85dd-4f6d-86a8-52b9aea41027',
+            content: 'Lorem ipsum dolor sit amet consectetur',
+            media_url: null,
+            message_type: 'message',
+            created_at: 'Sat 21 Nov 2026 14:06:28 GMT+0000'
+        },
+        {
+            id: '12424235',
+            chat_id: 'c50b4288-4838-418e-9527-e10bbbd0636c',
+            sender_id: '860ba99a-5997-46f7-980b-6f823b0ac493',
+            content: 'ipsum dolor sit, amet consectetur adipisicing elit. Commodi, modi aliquam perferendis eaque qui omnis porro',
+            media_url: null,
+            message_type: 'message',
+            created_at: 'Sat 21 Nov 2026 14:06:28 GMT+0000'
+        },
+        {
+            id: '12424236',
+            chat_id: 'c50b4288-4838-418e-9527-e10bbbd0636c',
+            sender_id: '33125fc3-85dd-4f6d-86a8-52b9aea41027',
+            content: 'amet consectetur adipisicing elit. Commodi, modi aliquam perferendis eaque qui omnis',
+            media_url: null,
+            message_type: 'message',
+            created_at: 'Sat 21 Nov 2026 14:06:28 GMT+0000'
         }
     ] 
 
@@ -49,7 +71,7 @@ const contactScreen = () => {
         <View
             className='flex flex-col w-full h-screen gap-0 bg-background dark:bg-dark_background'
         >
-            
+        
             {/* back btn, name and options */}
             <View
                 className='flex flex-row items-center justify-between w-full h-auto p-4 px-7 pt-14 bg-primary dark:bg-dark_primary'
@@ -130,7 +152,22 @@ const contactScreen = () => {
                 className='relative w-full h-[85%]'
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
-            >
+            >   
+                <FlatList
+                    data={fakeMessages}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <MessageCard
+                            id={item.id}
+                            chat_id={item.chat_id}
+                            sender_id={item.sender_id}
+                            content={item.content}
+                            media_url={item.media_url}
+                            message_type={item.message_type}
+                            created_at={item.created_at}
+                        />
+                    )}
+                />
                 <MessageInput
                     value={message_input}
                     onChangeText={(text: string) => set_message_input(text)}
