@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, useColorScheme } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Contact } from '@/constants/types'
 import { truncateText } from '@/utils/stringUtils'
 import { useRouter } from 'expo-router'
@@ -22,6 +22,11 @@ const ContactCard: React.FC<Contact> = ({
     const imageSource = typeof avatar_url === 'string' 
         ? { uri: avatar_url } 
         : avatar_url
+
+
+    useEffect(() => {
+        console.log(chat_id)
+    })
 
     return (
         <TouchableOpacity

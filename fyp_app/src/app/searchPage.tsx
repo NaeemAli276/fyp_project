@@ -55,7 +55,7 @@ const searchPage = () => {
         router.back()
     }
 
-    const { isLoading, error, data } = useQuery({
+    const { isFetching, error, data } = useQuery({
         queryFn: fetchUsers,
         queryKey: ['fetch_users', debounced_term],
         initialData: [],
@@ -103,7 +103,7 @@ const searchPage = () => {
         
             {/* loading state */}
             <View
-                className={`${isLoading && debounced_term !== '' ? 'flex' : 'hidden'} items-center justify-center w-full h-1/2`}
+                className={`${isFetching ? 'flex' : 'hidden'} items-center justify-center w-full h-1/2`}
             >
                 <ActivityIndicator
                     size={'large'}
@@ -113,7 +113,7 @@ const searchPage = () => {
 
             {/* error state */}
             <View
-                className={`w-full h-3/5 ${!isLoading && error !== null && debounced_term !== '' ? 'flex' : 'hidden'} flex-col items-center justify-center gap-4`}
+                className={`w-full h-3/5 ${!isFetching && error !== null && debounced_term !== '' ? 'flex' : 'hidden'} flex-col items-center justify-center gap-4`}
             >
                 <View
                     className='relative w-auto h-auto'
@@ -165,26 +165,27 @@ const searchPage = () => {
                         />
                     </View>
                 </View>
+                
                 {/* detail */}
                 <View
-                className='flex flex-col items-center justify-center w-auto h-auto gap-0 pb-12'
+                    className='flex flex-col items-center justify-center w-auto h-auto gap-0 pb-12'
                 >
-                <Text
-                    className='text-xl font-poppins-semibold text-text dark:text-background'
-                >
-                    Error
-                </Text>
-                <Text
-                    className='text-center px-14 text-text/80 dark:text-background/80 font-poppins-regular'
-                >
-                    An error has occured, please restart the app
-                </Text>
+                    <Text
+                        className='text-xl font-poppins-semibold text-text dark:text-background'
+                    >
+                        Error
+                    </Text>
+                    <Text
+                        className='text-center px-14 text-text/80 dark:text-background/80 font-poppins-regular'
+                    >
+                        An error has occured, please restart the app
+                    </Text>
                 </View>
             </View>
 
             {/* empty query */}
             <View
-                className={`w-full h-3/5 ${!isLoading && error === null && debounced_term === '' ? 'flex' : 'hidden'} flex-col items-center justify-center gap-4`}
+                className={`w-full h-3/5 ${!isFetching && error === null && debounced_term === '' ? 'flex' : 'hidden'} flex-col items-center justify-center gap-4`}
             >
                 <View
                     className='relative w-auto h-auto'

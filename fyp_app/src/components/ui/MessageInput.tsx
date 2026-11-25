@@ -29,7 +29,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
                     onPress={onPress}
                 />
                 <TouchableOpacity
-                    className='absolute p-2 rounded-full right-2 bottom-2 bg-primary dark:bg-dark_primary text-background'
+                    className={`absolute p-2 rounded-full right-2 bottom-2 bg-primary dark:bg-dark_primary text-background ${value !== '' ? 'flex' : 'hidden'}`}
+                    onPress={onPress}
                 >
                     <DynamicIcon
                         strokeWidth={1.2}

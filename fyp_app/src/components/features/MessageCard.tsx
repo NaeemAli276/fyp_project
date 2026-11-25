@@ -6,7 +6,7 @@ import AvatarImage from '../ui/AvatarImage'
 import { formatTime } from '@/utils/stringUtils'
 
 interface MessageCardProps extends Message {
-    avatar_url: string | null
+    avatar_url?: string | null
 }
 
 const MessageCard: React.FC<MessageCardProps> = ({
@@ -17,14 +17,14 @@ const MessageCard: React.FC<MessageCardProps> = ({
     media_url,
     message_type,
     created_at,
-    avatar_url
+    avatar_url = null
 }) => {
 
     const { user } = useAuthStore()
     
-    useEffect(() => {
-        console.log('sender_id: ', sender_id, '\n', 'user_id: ', user?.user_id)
-    }, [])
+    // useEffect(() => {
+    //     console.log('sender_id: ', sender_id, '\n', 'user_id: ', user?.user_id)
+    // }, [])
 
     return (
         <View
@@ -38,7 +38,7 @@ const MessageCard: React.FC<MessageCardProps> = ({
                     size='xs'
                 />   
                 <View
-                    className={`flex flex-col w-[90%] h-auto gap-1 ${sender_id === user?.user_id ? 'bg-primary dark:bg-dark_primary' : 'bg-text/10 dark:bg-background/10'} p-2 rounded-md items-end justify-end`}
+                    className={`flex flex-col max-w-[90%] w-auto h-auto gap-0 ${sender_id === user?.user_id ? 'bg-primary dark:bg-dark_primary' : 'bg-text/10 dark:bg-background/10'} p-2 rounded-md items-end justify-end`}
                 >
                     
                     <Text

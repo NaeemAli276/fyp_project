@@ -34,7 +34,7 @@ const ContactListScreen = () => {
   }
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ['load_messages'],
+    queryKey: ['fetch_chats'],
     queryFn: fetch_chats,
     initialData: []
   })
