@@ -71,17 +71,20 @@ const contactScreen = () => {
 
     const handle_send_message = async (chat_id: string, sender_id: string, content: string): Promise<void> => {
         
-        const { error } = await supabase.from('messages').insert({
-            chat_id: chat_id,
-            sender_id: sender_id,
-            content: content,
-            message_type: 'text'
-        })
-        if (error) {
-            console.error(error)
-        }
+        if (message_input !== '') {
+            const { error } = await supabase.from('messages').insert({
+                chat_id: chat_id,
+                sender_id: sender_id,
+                content: content,
+                message_type: 'text'
+            })
+            if (error) {
+                console.error(error)
+            }
 
-        set_message_input('')
+            refetch()
+            set_message_input('')   
+        }
 
     }
 
@@ -98,26 +101,39 @@ const contactScreen = () => {
             throw new Error(error.message)
         }
         
+        console.log(messages)
         return messages
 
     }
 
-    const test_retrieve_messages = async () => {
-        return fakeMessages
+    const handle_delete_message = async (messageId: string): Promise<void> => {
+        
+        const { error } = await supabase
+            .from('messages')
+            .delete()
+            .eq('id', messageId);
+
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        refetch()
+
     }
 
-    const { isFetching, error, data } = useQuery({
+    const { isFetching, error, data, refetch } = useQuery({
         queryKey: ['fetch_chat', id],
-        // queryKey: ['fetch_chat'],
         queryFn: handle_retrieve_messages,
-        // queryFn:  test_retrieve_messages ,
         initialData: [],
+        
     })
     
-    useEffect(() => {
-        console.log('chat_id: ', id)
-        // console.log('pathname: ', pathname)
-    }, [])
+    // useEffect(() => {
+    //     // console.log('chat_id: ', id)
+    //     // console.log('pathname: ', pathname)
+    //     console.log(message_input)
+    // }, [message_input])
 
     return (
         <View
@@ -271,50 +287,95 @@ const contactScreen = () => {
                 </View>
             </View>
 
+            {/* loading state */}
+            <View
+                className={`${isFetching ? 'flex' : 'hidden'} flex-col items-center justify-center w-full h-3/4`}
+            >
+                <ActivityIndicator
+                    size={'large'}
+                    color={colorScheme === 'dark' ? '#5b98ff' : '#3b82f6'}
+                />      
+            </View>
+
+            {/* empty state */}
+            <View
+                className={`w-full h-4/5 ${!isFetching && error !== null && data.length <= 0 ? 'flex' : 'hidden'} flex-col items-center justify-center gap-4`}
+            >
+                <View
+                    className='relative w-auto h-auto'
+                >
+                    <DynamicIcon
+                        name='MessageSquare'
+                        size={80}
+                        // strokeWidth={1.2}
+                        fill={colorScheme === 'dark' ? '#eff6ff' : '#1e3a8a'}
+                        color={colorScheme === 'dark' ? '#eff6ff' : '#1e3a8a'}
+                    >
+                        <View
+                            style={{
+                                transform: [
+                                    { translateX: 4 * 4.25 },
+                                    { translateY: 4 * 4 }
+                                ]
+                            }}
+                        >
+                            <DynamicIcon
+                                name='X'
+                                size={40}
+                                color={colorScheme === 'dark' ? '#1e3a8a' : '#eff6ff'}
+                            />
+                        </View>
+                    </DynamicIcon>
+                </View>
+                
+                {/* detail */}
+                <View
+                    className='flex flex-col items-center justify-center w-auto h-auto gap-0 pb-12'
+                >
+                    <Text
+                        className='text-xl font-poppins-semibold text-text dark:text-background'
+                    >
+                        No messages
+                    </Text>
+                    <Text
+                        className='text-center px-14 text-text/80 dark:text-background/80 font-poppins-regular'
+                    >
+                        Start typing to talk to the other person
+                    </Text>
+                </View>
+            </View>
+
             {/* messages and message input */}
             <KeyboardAvoidingView
-                className={`relative w-full h-[85%] ${!isFetching && error === null && data.length > 0 ? 'flex' : 'hidden'}`}
+                className={`relative w-full h-[85%] ${!isFetching && error === null && data.length >= 0 ? 'flex' : 'hidden'}`}
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
             >   
-                
-                {
-                    isFetching
-                    ?    <View
-                            className={`flex flex-col items-center justify-center w-full h-3/4`}
-                        >
-                            <ActivityIndicator
-                                size={'large'}
-                                color={colorScheme === 'dark' ? '#5b98ff' : '#3b82f6'}
-                            />      
-                        </View>
-                    :   <>
-                            <FlatList
-                                data={data}
-                                keyExtractor={(item) => item.id}
-                                renderItem={({ item }) => (
-                                    <MessageCard
-                                        id={item.id}
-                                        chat_id={item.chat_id}
-                                        sender_id={item.sender_id}
-                                        content={item.content}
-                                        media_url={item.media_url}
-                                        message_type={item.message_type}
-                                        created_at={item.created_at}
-                                        avatar_url={item.sender_id === user?.user_id ? user?.avatar_url : parsedUser?.avatar_url}
-                                    />
-                                )}
-                                scrollEnabled
-                                showsVerticalScrollIndicator
-                                contentContainerClassName='flex flex-col gap-4 pb-24'
-                            />
-                            <MessageInput
-                                value={message_input}
-                                onChangeText={(text: string) => set_message_input(text)}
-                                onPress={() => handle_send_message(id, `${user?.user_id}`, message_input)}
-                            />
-                        </>
-                }
+                <FlatList
+                    data={data}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <MessageCard
+                            id={item.id}
+                            chat_id={item.chat_id}
+                            sender_id={item.sender_id}
+                            content={item.content}
+                            media_url={item.media_url}
+                            message_type={item.message_type}
+                            created_at={item.created_at}
+                            avatar_url={item.sender_id === user?.user_id ? user?.avatar_url : parsedUser?.avatar_url}
+                            handle_delete_message={() => handle_delete_message(item.id)}
+                        />
+                    )}
+                    scrollEnabled
+                    showsVerticalScrollIndicator
+                    contentContainerClassName='flex flex-col gap-4 pb-24 w-full'
+                />
+                <MessageInput
+                    value={message_input}
+                    onChangeText={(text: string) => set_message_input(text)}
+                    onPress={() => handle_send_message(id, `${user?.user_id}`, message_input)}
+                />
             </KeyboardAvoidingView>
                     
         </View>

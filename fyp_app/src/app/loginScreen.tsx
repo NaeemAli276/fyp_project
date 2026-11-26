@@ -72,7 +72,7 @@ const loginScreen = () => {
           className='w-auto h-auto p-8 pt-4 pb-24'
         >
           <Link
-            href={'/splashScreen'}
+            href={'/greetingScreen'}
           >
             <DynamicIcon
               name='ArrowLeft'

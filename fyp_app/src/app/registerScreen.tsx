@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import DynamicIcon  from '../components/ui/DynamicIcon'
 import { Link, Redirect, useRouter } from 'expo-router'
 import { NativeStackNavigationProp } from 'expo-router' 
-import { RootStackParamList } from '@/constants/types' 
 import CustomTextInput from '@/components/ui/CustomTextInput'
 import { useColorScheme } from 'react-native' 
 import CustomCheckbox from '@/components/ui/CustomCheckbox'
@@ -75,7 +74,7 @@ const registerScreen = () => {
           className='w-auto h-auto p-8 pt-4 pb-24'
         >
           <Link
-            href={'/splashScreen'}
+            href={'/greetingScreen'}
           >
             <DynamicIcon
               name='ArrowLeft'

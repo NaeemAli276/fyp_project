@@ -22,22 +22,26 @@ const MessageInput: React.FC<MessageInputProps> = ({
                 className='relative w-full h-auto'
             >
                 <TextInput
-                    className='w-full p-4 rounded-full bg-text/10 font-poppins-regular placeholder:text-text/60 text-text dark:bg-background/10 dark:text-background dark:placeholder:text-background/60'
+                    className='w-full pl-4 pr-16 rounded-full h-14 bg-text/10 font-poppins-regular placeholder:text-text/60 text-text dark:bg-background/10 dark:text-background dark:placeholder:text-background/60'
                     placeholder='Send a message...'
                     value={value}
                     onChangeText={onChangeText}
-                    onPress={onPress}
+                    numberOfLines={1}
                 />
-                <TouchableOpacity
-                    className={`absolute p-2 rounded-full right-2 bottom-2 bg-primary dark:bg-dark_primary text-background ${value !== '' ? 'flex' : 'hidden'}`}
-                    onPress={onPress}
+                <View
+                    className={`absolute bottom-0 right-0 flex items-center justify-center p-2 rounded-r-full h-14 ${value !== '' ? 'flex' : 'hidden'}`}
                 >
-                    <DynamicIcon
-                        strokeWidth={1.2}
-                        name={'Send'}
-                        color={'#eff6ff'}
-                    />
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        className={`p-2 rounded-full bg-primary dark:bg-dark_primary text-background`}
+                        onPress={onPress}
+                    >
+                        <DynamicIcon
+                            strokeWidth={1.2}
+                            name={'Send'}
+                            color={'#eff6ff'}
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )

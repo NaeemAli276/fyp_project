@@ -24,10 +24,6 @@ const ContactCard: React.FC<Contact> = ({
         : avatar_url
 
 
-    useEffect(() => {
-        console.log(chat_id)
-    })
-
     return (
         <TouchableOpacity
             className='flex flex-row w-full h-[72px] p-3 px-8 items-center'
